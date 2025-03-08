@@ -1,4 +1,4 @@
-# Static Array
+# 1D Array
 
 Lets create an array and look at its radiation pattern.
 

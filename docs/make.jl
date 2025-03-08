@@ -25,7 +25,7 @@ makedocs(
     pages = Any[
         "index.md",
         "Examples"  => Any[ 
-            "Examples/static_array.md",                
+            "Examples/1D_array.md",                
             "Examples/beem_steering.md",
         ],
     ],
