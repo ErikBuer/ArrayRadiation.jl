@@ -1,8 +1,22 @@
 module DspUtility
 
-using Statistics
-
 export linear_array
+
+
+"""
+	_mean(x::Real)::Real
+
+Calculate the mean of a vector. 
+
+```jldoctest
+julia> a = [1,2,3,4];
+
+julia> _mean(a)
+2,5
+````
+"""
+_mean(x::Real)::Real = sum(x)/length(x)
+
 
 """
 Convert between linear scale (magnitude) and decibel 
@@ -36,7 +50,7 @@ end
 Return the average signal power in dbW
 """
 function power_dBW(signal)
-	return pow2db(mean(abs(signal) .^ 2))
+	return pow2db(_mean(abs(signal) .^ 2))
 end
 
 """
