@@ -12,4 +12,4 @@ Add it using ht following command.
 ## Building docs locally
 
 To speed up docs generation locally, there is a separate make_local.jl file.
-Trun this file from project root.
+Run this file from project root.
