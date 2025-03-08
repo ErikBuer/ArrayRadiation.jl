@@ -4,7 +4,7 @@
 using Plots;
 gr();
 
-using ..ArrayRadiation
+using ArrayRadiation
 
 element_separation_λ = 1/2;
 

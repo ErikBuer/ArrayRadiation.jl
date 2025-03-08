@@ -1,3 +1,4 @@
 [deps]
+ArrayRadiation = "bd679b92-6dae-455f-83b3-ba41583ebc1e"
 DSP = "717857b8-e6f2-59f4-9121-6e50c889abd2"
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"

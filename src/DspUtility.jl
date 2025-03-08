@@ -1,6 +1,6 @@
-using Statistics
-
 module DspUtility
+
+using Statistics
 
 export linear_array
 

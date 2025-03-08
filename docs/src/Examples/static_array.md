@@ -8,7 +8,7 @@ First we must place the antenna elements. Lets give them λ/2 spacing and spread
 using Plots;
 gr();
 
-using ..ArrayRadiation
+using ArrayRadiation
 
 element_separation_λ = 1/2;
 
