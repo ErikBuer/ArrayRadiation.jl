@@ -13,7 +13,7 @@ julia> a = [1,2,3,4];
 
 julia> _mean(a)
 2,5
-````
+```
 """
 _mean(x::Real)::Real = sum(x)/length(x)
 
