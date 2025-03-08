@@ -61,7 +61,7 @@ angleDeg = rad2deg.(angleRad);
 
 
 # Map K-space gain calculation function.
-GΩ(k) = ArrayRadiation.Kspace.gain_2D(k, 0, r, W)
+GΩ(k) = ArrayRadiation.Kspace.gain_2D(k, 1, r, W)
 GΩ_lin = broadcast(GΩ, angleRad)
 
 GΩ_dB = ArrayRadiation.DspUtility.pow2db.(abs.(GΩ_lin))

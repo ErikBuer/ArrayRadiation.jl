@@ -27,15 +27,15 @@ Calculate `GΩ(k)`, the angular domain gain at angle k [rad] for an array with s
 
 # Arguments
 - `k`					Angle [rad].
-- `element_gain_k_dB`	The antena gain in direction `k` [dB].
+- `element_gain`		The antena gain in direction `k` [dB].
 - `element_placement_λ` The placement of each antenna element in wavelength units.
 - `element_weighting`	The complex weight of each element.
 - `α`					Cosine taper/mutual coupling coefficient α>1.
 """
-function gain_2D(k::Real, element_gain_k_dB::Real, element_placement_λ::AbstractVector, element_weighting::AbstractVector, α::AbstractFloat = 1.4)
+function gain_2D(k::Real, element_gain::Real, element_placement_λ::AbstractVector, element_weighting::AbstractVector, α::AbstractFloat = 1.4)
 
 	# Element gain at angle k
-	Ge = DspUtility.db2pow(element_gain_k_dB)
+	Ge = element_gain
 
 	# Account for forshortening and mutual coupling through (cosine tapering).
 	Ge = (Ge + 0 * im) * cos_taper(k, α)

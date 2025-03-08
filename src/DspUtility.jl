@@ -4,18 +4,20 @@ export linear_array
 
 
 """
-	_mean(x::Real)::Real
+	_mean(x)::Real
 
 Calculate the mean of a vector. 
 
 ```jldoctest
+julia> using ArrayRadiation
+
 julia> a = [1,2,3,4];
 
-julia> _mean(a)
-2,5
+julia> ArrayRadiation.DspUtility._mean(a)
+2.5
 ```
 """
-_mean(x::Real)::Real = sum(x)/length(x)
+_mean(x)::Real = sum(x)/length(x)
 
 
 """

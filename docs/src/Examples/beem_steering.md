@@ -44,7 +44,7 @@ anim = @animate for (index, scan_angle) in enumerate(scan_angles)
 	W = exp.(im .* W_ang) # Example of pointing to an angle.
 
 	# Map K-space gain calculation function.
-	GΩ(k) = ArrayRadiation.Kspace.gain_2D(k, 0, r, W)
+	GΩ(k) = ArrayRadiation.Kspace.gain_2D(k, 1, r, W)
 
 	GΩ_lin = broadcast(GΩ, angleRad)
 	GΩ_dB = broadcast(ArrayRadiation.DspUtility.pow2db, abs.(GΩ_lin))
