@@ -7,7 +7,7 @@ c = 3e8 # Velocity of light lin vacuum.
 Calculate 1D cosine taper for angle θ [rad].
 Optionally provide α. α=1.4 accounts for mutual coupling between elements.
 
-- Roger A. Dana, Electronically Scanned Arrays and K-Space Gain Formulation, Springer, 2019.
+- R. A. Dana, Electronically Scanned Arrays and K-Space Gain Formulation, Springer, 2019.
 """
 cos_taper(θ, α = 1.4) = (cos(θ) + 0 * im)^α
 
@@ -23,7 +23,7 @@ end
 """
 Calculate `GΩ(k)`, the angular domain gain at angle k [rad] for an array with specified element weights.
 
-- Roger A. Dana, Electronically Scanned Arrays and K-Space Gain Formulation, Springer, 2019.
+- R. A. Dana, Electronically Scanned Arrays and K-Space Gain Formulation, Springer, 2019.
 
 # Arguments
 - `k`					Angle [rad].

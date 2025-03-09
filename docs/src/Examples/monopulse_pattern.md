@@ -16,7 +16,7 @@ r = ArrayRadiation.linear_array(element_count, element_separation_λ)
 
 # Antenna element weigth
 W = Window.taylor(32,4,-25)
-W2 = Window.split_taylor(32,4,-25)
+W2 = Window.split_window(copy(W))
 
 scatter(r, W, 
     marker=:circle, 
@@ -66,7 +66,7 @@ plot(angleDeg, GΩ1_dB,
 
 plot!(angleDeg, GΩ2_dB, 
     label  = "Difference Beam"
-    )
+)
 
 ```
 
