@@ -39,8 +39,6 @@ julia> round( sum(W), sigdigits=5)
 64.0
 ```
 
-![Taylor Window](plots/Taylor Window.png)
-
 ## References
 
 - Carrar, Goodman and Majewski, Spotlight Synthetic Aperture Radar: Signal Processing Algorithms, Artech House, 1995
@@ -105,9 +103,6 @@ julia> round.( W[N-3:N], sigdigits=3 )
 ```
 
 Below is an example of a split Taylor window.
-
-![Split Taylor Window](plots/Split Taylor Window.png)
-
 """
 function split_window(W::AbstractVector)::AbstractVector
     N = length(W)
@@ -125,7 +120,6 @@ function split_window(W::AbstractVector)::AbstractVector
     
     return W
 end
-
 
 """
     cosine_q(M::Integer, q, scale = true)::AbstractVector
@@ -157,8 +151,6 @@ julia> round.( W[1:4], sigdigits=3 )
 julia> round( sum(W), sigdigits=2)
 64.0
 ```
-
-![Cosine q Window](plots/Cosine q Window.png)
 
 ## References
 
