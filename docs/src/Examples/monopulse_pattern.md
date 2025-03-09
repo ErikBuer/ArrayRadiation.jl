@@ -1,4 +1,8 @@
-# Window Function
+# Monopulse Pattern
+
+For monopulse radar processing, we use a sum beam and a difference beam (on reception) in each axis, to estimate an angle to a target with the goal of tracking it.
+
+We can create these two beams by playing with the element weights.
 
 ``` @example WindowWeights
 using Plots;
@@ -9,17 +13,10 @@ using ArrayRadiation
 element_separation_λ = 1/2;
 element_count = 32;
 r = ArrayRadiation.linear_array(element_count, element_separation_λ)
-```
 
-These elements now represent antennas. For the time being, these will be isotropic radiators.
-We can apply different weights to each element so lets look at how this will affect our array.
-
-Lets compare a linear weight to a commonly used Taylor weighting scheme.
-
-``` @example WindowWeights
 # Antenna element weigth
-W = ones(element_count)
-W2 = Window.taylor(32,4,-25)
+W = Window.taylor(32,4,-25)
+W2 = Window.split_window(copy(W))
 
 scatter(r, W, 
     marker=:circle, 
@@ -33,8 +30,6 @@ scatter(r, W,
 )
 scatter!(r, W2)
 ```
-
-As we can see, both weight functions have the same sum.
 
 ``` @example WindowWeights
 sum(W)
@@ -66,13 +61,13 @@ plot(angleDeg, GΩ1_dB,
     title  = "Array gain",
     ylims  = (-30, 18),
     reuse  = true,
-    label  = "Uniform weights"
+    label  = "Sum Beam"
 )
 
 plot!(angleDeg, GΩ2_dB, 
-    label  = "Taylor weights"
-    )
+    label  = "Difference Beam"
+)
 
 ```
 
-It is apparent that the Taylor weighted antenna has greater peak to sidelobe distance, comming with the penalty of a wider main beam.
+As we can see, the difference beam is not great..
