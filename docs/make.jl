@@ -27,6 +27,7 @@ makedocs(
         "Examples"  => Any[ 
             "Examples/1D_array.md",
             "Examples/window_function.md",
+            "Examples/monopulse_pattern.md",
             "Examples/beem_steering.md",
         ],
     ],

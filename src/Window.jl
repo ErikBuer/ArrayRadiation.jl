@@ -63,4 +63,61 @@ function taylor(N::Integer, n_bar::Integer, sll_dB::Real)::AbstractVector
     return win
 end
 
+
+
+"""
+    split_taylor(N::Integer, n_bar::Integer, sll_dB::Real)::AbstractVector
+
+Create split taylor window. For monopulse difference beam
+
+
+## Arguments
+
+- `N`       The window length.
+- `n_bar`   The number of nearly constant-level sidelobes adjacent to the main lobe.
+- `sll_dB`  Peak sidelobe_level in dB.
+
+## Example
+
+```jldoctest
+julia> using ArrayRadiation
+
+julia> N = 64;
+
+julia> W = Window.split_taylor(N, 4, -35);
+
+julia> round.( W[1:4], sigdigits=3 )
+4-element Vector{Float64}:
+ 0.28
+ 0.288
+ 0.305
+ 0.329
+
+
+julia> round.( W[N-3:N], sigdigits=3 )
+4-element Vector{Float64}:
+ -0.329
+ -0.305
+ -0.288
+ -0.28
+
+julia> round( sum(W), sigdigits=2)
+-6.3e-15
+```
+"""
+function split_taylor(N::Integer, n_bar::Integer, sll_dB::Real)::AbstractVector
+    if mod(N,2) ==1
+        @error "`split_taylor` only works with even number of elements!"
+    end
+    W = taylor(N, n_bar, sll_dB)
+
+    # Invert last half of array.
+    mid = N ÷ 2
+    for i in 1:(mid)
+        W[mid + i] = -W[mid + i]
+    end
+    
+    return W
+end
+
 end
