@@ -30,8 +30,8 @@ end
 """
 Convert between decibal scale (magnitude) and linear
 """
-function db2mag(magDb)
-	return 10^(magDb ./ 20)
+function db2mag(mag_dB)
+	return 10^(mag_dB ./ 20)
 end
 
 """
@@ -44,19 +44,19 @@ end
 """
 Convert between decibal scale (power) and linear
 """
-function db2pow(powerDb)
-	return 10^(powerDb ./ 10)
+function db2pow(power_dB)
+	return 10^(power_dB ./ 10)
 end
 
 """
-Return the average signal power in dbW
+Return the average signal power in dBW
 """
 function power_dBW(signal)
 	return pow2db(_mean(abs(signal) .^ 2))
 end
 
 """
-Return the average signal power in dbm
+Return the average signal power in dBm
 """
 function power_dBm(signal)
 	return power_dBW(signal) + 30

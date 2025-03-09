@@ -59,7 +59,7 @@ anim = @animate for (index, scan_angle) in enumerate(scan_angles)
 	# W = ArrayRadiation.subarray_weighting_2d( W, subarray_size );
 
 	# Map K-space gain calculation function.
-	gain(k) = ArrayRadiation.Kspace.k_space_gain_2D(k, 1, r, W)
+	gain(k) = ArrayRadiation.Kspace.gain_2D(k, 1, r, W)
 
 	radPattern = broadcast(gain, angleRad)
 	radPattern_dB = broadcast(DspUtility.pow2db, abs.(radPattern))
