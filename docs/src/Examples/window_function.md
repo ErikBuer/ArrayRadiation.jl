@@ -66,13 +66,63 @@ plot(angleDeg, GΩ1_dB,
     title  = "Array gain",
     ylims  = (-30, 18),
     reuse  = true,
-    label  = "Uniform weights"
+    label  = "Uniformly weighted"
 )
 
 plot!(angleDeg, GΩ2_dB, 
-    label  = "Taylor weights"
-    )
-
+    label  = "Taylor weighted"
+)
 ```
 
 It is apparent that the Taylor weighted antenna has greater peak to sidelobe distance, comming with the penalty of a wider main beam.
+
+## Window Comparisons
+
+Weighting distributions (windows) have been studied extensively over the years.
+The reader is encouraged to read up on the different windows and their properties.
+
+``` @example WindowWeights
+
+W3 = Window.cosine_q(element_count, 1)
+W4 = Window.cosine_q(element_count, 2)
+
+
+scatter(r, W2, 
+    marker=:circle, 
+    linecolor=:blue, 
+    markersize=4, 
+    xlabel="Element Position [λ]", 
+    ylabel="Weight", 
+    title="Antenna Element Weights", 
+    legend=true, 
+    grid=true,
+    label  = "Taylor weights",
+)
+scatter!(r, W3, label  = "Cosine weights")
+scatter!(r, W4, label  = "Hanning weights")
+```
+
+``` @example WindowWeights
+GΩ3_lin = map(k -> GΩ(k, W3), angleRad)
+GΩ4_lin = map(k -> GΩ(k, W4), angleRad)
+
+GΩ3_dB = DspUtility.pow2db.(abs.(GΩ3_lin))
+GΩ4_dB = DspUtility.pow2db.(abs.(GΩ4_lin))
+
+plot(angleDeg, GΩ2_dB,
+    xlabel = "Angle [deg]",
+    ylabel = "GΩ [dB]",
+    title  = "Array gain",
+    ylims  = (-50, 18),
+    reuse  = true,
+    label  = "Taylor weighted"
+)
+
+plot!(angleDeg, GΩ3_dB, 
+    label  = "Cosine weighted"
+)
+
+plot!(angleDeg, GΩ4_dB, 
+    label  = "Hanning weighted"
+)
+```

@@ -130,7 +130,7 @@ Create a coseine^q weighting (window).
 
 - `M`       The length of the window.
 - `q`       For `q=0` yields a uniform weight,`q=1` yelds a cosine weighting, and `q=2` yields a Hanning weighting.
-- `scale`   Peak of window is 1, when not scaled. `sum( cosine_q(M, q) ) = M` when scaled.
+- `scale`   Max of window is 1, when not scaled. `sum( cosine_q(M, q) ) = M` when scaled.
 
 ## Example
 
