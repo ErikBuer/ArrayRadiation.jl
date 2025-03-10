@@ -8,16 +8,9 @@ element_separation_λ = 1/2;
 
 # Place elements symmetrically around zero
 
-element_count = 32;
+element_count = 64;
 
 r = ArrayRadiation.linear_array(element_count, element_separation_λ)
-
-# Frequency of interrest
-freq = 12e9
-# Propagation speed
-c = 3e8
-# Wavelength
-λ = c / freq
 
 angleRad = LinRange(π / 2, -π / 2, 501);
 angleDeg = rad2deg.(angleRad);
@@ -30,6 +23,8 @@ Inter-element phase shift for scanning in direction k [rad].
 # Angles at which to scan the array.
 scan_angles = LinRange(-π / 2, π / 2, 81);
 
+# Use Hanning element weights.
+Wp = Window.cosine_q(element_count, 2)
 
 plt1 = plot();
 
@@ -38,8 +33,8 @@ anim = @animate for (index, scan_angle) in enumerate(scan_angles)
 	phase_increment = α(scan_angle)
 	W_ang = LinRange(0, (element_count - 1) * phase_increment, element_count)
 
-	# Antenna element weigth
-	W = exp.(im .* W_ang) # Example of pointing to an angle.
+	# Antenna element complex weight
+	W = Wp.*exp.(im .* W_ang) # Example of pointing to an angle.
 
 	# Map K-space gain calculation function.
 	GΩ(k) = ArrayRadiation.Kspace.gain_2D(k, 1, r, W)
@@ -51,10 +46,10 @@ anim = @animate for (index, scan_angle) in enumerate(scan_angles)
 		xlabel = &quot;Angle [deg]&quot;,
 		ylabel = &quot;GΩ [dB]&quot;,
 		title  = &quot;Array Gain&quot;,
-		ylims  = (-30, 20),
+		ylims  = (-80, 20),
 		reuse  = true,
 		legend = false
 		)
 end
 
-gif(anim, &quot;array_scan.gif&quot;, fps = 10)</code></pre><img src="b4f5b000.gif" alt="Example block output"/></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../monopulse_pattern/">« Monopulse Pattern</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.8.1 on <span class="colophon-date" title="Sunday 9 March 2025 17:24">Sunday 9 March 2025</span>. Using Julia version 1.11.3.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+gif(anim, &quot;array_scan.gif&quot;, fps = 10)</code></pre><img src="350dc9b9.gif" alt="Example block output"/></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../monopulse_pattern/">« Monopulse Pattern</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.8.1 on <span class="colophon-date" title="Monday 10 March 2025 18:23">Monday 10 March 2025</span>. Using Julia version 1.11.3.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
