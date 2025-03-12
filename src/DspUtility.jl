@@ -72,5 +72,5 @@ end
 """
 Generate locations (1D) for an x*λ spaced array of N elements. N is even.
 """
-linear_array(N, separation_lambda) = LinRange(-N / 2 + separation_lambda, N / 2 - separation_lambda, N)
+linear_array(N, separation_lambda) = LinRange(- (N - 1) / 2 * separation_lambda, (N - 1) / 2 * separation_lambda, N)
 end
