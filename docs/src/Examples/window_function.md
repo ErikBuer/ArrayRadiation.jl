@@ -51,11 +51,15 @@ Now lets compare their radiation pattern.
 angleRad = LinRange(π / 2, -π / 2, 501);
 angleDeg = rad2deg.(angleRad);
 
+k_xyz = 2π*Kspace.elevation2k_hat.(angleRad)
+
+element_gain_approximation = Kspace.cos_taper.(angleRad)
+
 
 # Map K-space gain calculation function.
-GΩ(k, _W) = Kspace.gain_2D(k, 1, r, _W)
-GΩ1_lin = map(k -> GΩ(k, W), angleRad)
-GΩ2_lin = map(k -> GΩ(k, W2), angleRad)
+GΩ(k, _W) = Kspace.gain_1D(k, 1, r, _W)
+GΩ1_lin = map(k -> GΩ(k, W), k_xyz).*element_gain_approximation
+GΩ2_lin = map(k -> GΩ(k, W2), k_xyz).*element_gain_approximation
 
 GΩ1_dB = DspUtility.pow2db.(abs.(GΩ1_lin))
 GΩ2_dB = DspUtility.pow2db.(abs.(GΩ2_lin))
@@ -103,8 +107,8 @@ scatter!(r, W4, label  = "Hanning weights")
 ```
 
 ``` @example WindowWeights
-GΩ3_lin = map(k -> GΩ(k, W3), angleRad)
-GΩ4_lin = map(k -> GΩ(k, W4), angleRad)
+GΩ3_lin = map(k -> GΩ(k, W3), k_xyz).*element_gain_approximation
+GΩ4_lin = map(k -> GΩ(k, W4), k_xyz).*element_gain_approximation
 
 GΩ3_dB = DspUtility.pow2db.(abs.(GΩ3_lin))
 GΩ4_dB = DspUtility.pow2db.(abs.(GΩ4_lin))

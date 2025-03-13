@@ -30,7 +30,16 @@ scatter(r, zeros(length(r)),
 )
 ```
 
-These elements now represent antennas. For the time being, these will be isotropic radiators.
+These elements now represent the antenna placements.
+For now, we use the `cos_taper` funciton to approzimate the element gain.
+
+``` @example StaticArray
+angleRad = LinRange(π / 2, -π / 2, 501);
+angleDeg = rad2deg.(angleRad);
+
+element_gain_approximation = Kspace.cos_taper.(angleRad)
+```
+
 We can apply different weights to each element so lets look at how this will affect our array.
 
 Lets start by giving each element a uniform weight:
@@ -55,16 +64,14 @@ scatter(r, W,
 With this defined, we can calculate the radiation pattern of the array.
 
 ``` @example StaticArray
-
-angleRad = LinRange(π / 2, -π / 2, 501);
-angleDeg = rad2deg.(angleRad);
-
+# Calculate K-space vectors
+k_xyz = 2π*Kspace.elevation2k_hat.(angleRad)
 
 # Map K-space gain calculation function.
-GΩ(k) = ArrayRadiation.Kspace.gain_2D(k, 1, r, W)
-GΩ_lin = broadcast(GΩ, angleRad)
+GΩ(k) = Kspace.gain_1D(k, 1, r, W)
+GΩ_lin = broadcast(GΩ, k_xyz).*element_gain_approximation
 
-GΩ_dB = ArrayRadiation.DspUtility.pow2db.(abs.(GΩ_lin))
+GΩ_dB = DspUtility.pow2db.(abs.(GΩ_lin))
 
 plot(angleDeg, GΩ_dB,
     xlabel = "Angle [deg]",

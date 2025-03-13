@@ -57,7 +57,7 @@ Optionally provide α. α=1.4 accounts for mutual coupling between elements.
 
 - R. A. Dana, Electronically Scanned Arrays and K-Space Gain Formulation, Springer, 2019.
 """
-cos_taper(θ::Real, α = 1.4) = (cos(θ) + 0 * im)^α
+cos_taper(θ::Real, α = 1.4) = cos(θ)^α
 
 """
 
