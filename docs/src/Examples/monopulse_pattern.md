@@ -43,19 +43,28 @@ Now lets compare their radiation pattern.
 
 ``` @example WindowWeights
 
-angleRad = LinRange(π / 2, -π / 2, 501);
-angleDeg = rad2deg.(angleRad);
+elevationRad = LinRange(π / 2, -π / 2, 501);
+k_xyz = 2π*Kspace.elevation2k_hat.(elevationRad)
+elevationDeg = rad2deg.(elevationRad);
 
 
 # Map K-space gain calculation function.
-GΩ(k, _W) = Kspace.gain_2D(k, 1, r, _W)
-GΩ1_lin = map(k -> GΩ(k, W), angleRad)
-GΩ2_lin = map(k -> GΩ(k, W2), angleRad)
+GΩ(k) = ArrayRadiation.Kspace.gain_1D(k, 1, r, W)
+GΩ_lin = broadcast(GΩ, k_xyz)
+
+# Calculate
+GΩ_lin = Kspace.cos_taper.(elevationRad)
+
+
+# Map K-space gain calculation function.
+GΩ(k, _W) = Kspace.gain_1D(k, 1, r, _W)
+GΩ1_lin = map(k -> GΩ(k, W), k_xyz)
+GΩ2_lin = map(k -> GΩ(k, W2), k_xyz)
 
 GΩ1_dB = DspUtility.pow2db.(abs.(GΩ1_lin))
 GΩ2_dB = DspUtility.pow2db.(abs.(GΩ2_lin))
 
-plot(angleDeg, GΩ1_dB,
+plot(elevationDeg, GΩ1_dB,
     xlabel = "Angle [deg]",
     ylabel = "GΩ [dB]",
     title  = "Array gain",
@@ -64,7 +73,7 @@ plot(angleDeg, GΩ1_dB,
     label  = "Sum Beam"
 )
 
-plot!(angleDeg, GΩ2_dB, 
+plot!(elevationDeg, GΩ2_dB, 
     label  = "Difference Beam"
 )
 

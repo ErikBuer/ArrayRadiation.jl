@@ -1,76 +1,52 @@
-using Plots;
-gr();
-
 using ArrayRadiation
+using Plots
+gr()
 
-# element_separation_lambda =  ArrayTools.maximum_element_separation( 50 )
-element_separation_lambda = 1/2;
-@info "Antenna element separation is $element_separation_lambda"
+element_separation_λ = 1/2;
 
 i = im
 
+element_count = 32;
 # Place elements symmetrically around zero
-
-element_count = 24;
-# TODO subarray_size = 2;
-
-r = ArrayRadiation.linear_array(element_count, element_separation_lambda)
-
-# Frequency of interrest
-freq = 24e9
-# Propagation speed
-c = 3e8
-# Wavelength
-λ = c / freq
-
-# TODO add input for number of parallel elements. Control it through weighting. Control it through weighting.
+r_λ = ArrayRadiation.linear_array(element_count, element_separation_λ)
 
 
+# Elevation
 angleRad = LinRange(π / 2, -π / 2, 501);
 angledeg = rad2deg.(angleRad);
 
-#w_magnitude = Windows.bartlett_hann(element_count);
+element_gain_approximation = Kspace.cos_taper.(angleRad)
+
+k_xyz = 2π*Kspace.elevation2k_hat.(angleRad)
+kx = getindex.(k_xyz, 1)
 
 """
-Inter-element phase shift for scanning in direction k [rad].
-Assumes λ/2 spacing.
+Inter-element phase shift for scanning in direction θ [rad].
+
 """
-α(θ) = -π * element_separation_lambda * cos(π / 2 - θ);
+α(θ, d_λ) = 2π*d_λ*sin(θ);
 
 # Angles at which to scan the array.
-scan_angles = LinRange(-π / 4, π / 4, 61);
+scan_angles = LinRange(-π / 2, π / 2, 61);
 
 
 plt1 = plot();
-max_gain = 15;
+max_gain = 18;
 
 anim = @animate for (index, scan_angle) in enumerate(scan_angles)
 	global max_gain
 
-	phase_increment = α(scan_angle)
+	phase_increment = α(scan_angle, element_separation_λ)
 	W_ang = LinRange(0, (element_count - 1) * phase_increment, element_count)
-	#@info "W_ang = %s. \n" round.( W_ang; digits=2 )
 
 	# Antenna element weigth
 	W = exp.(i .* W_ang)# Example of pointing to an angle.
-	#	W	= W.*w_magnitude;
 
-	# Account for subarrays with uniform weighting.
-	# W = ArrayRadiation.subarray_weighting_2d( W, subarray_size );
+	# Map angular domain gain calculation function.
+	gain_Ω(k) = Kspace.gain_1D(k, 1, r_λ, W)
 
-	# Map K-space gain calculation function.
-	gain(k) = ArrayRadiation.Kspace.gain_2D(k, 1, r, W)
-
-	radPattern = broadcast(gain, angleRad)
+	radPattern = broadcast(gain_Ω, k_xyz).*element_gain_approximation
 	radPattern_dB = broadcast(DspUtility.pow2db, abs.(radPattern))
-
-	#half_power_beamwidth_deg = FrequencyDomain.x_db_bandwidth( radPattern_dB, 3 )*2*π/1001;
-	#@info "The RX half-power (3 dB) beamwidth is %s degrees. \n" round( half_power_beamwidth_deg; digits = 2 )
-
-	if max_gain < maximum(radPattern_dB) + 1
-		max_gain = maximum(radPattern_dB) + 1
-	end
-
 
 	plot(angledeg, radPattern_dB,
 		xlabel = "Angle [deg]",
@@ -81,4 +57,4 @@ anim = @animate for (index, scan_angle) in enumerate(scan_angles)
 		legend = false)
 end
 
-gif(anim, "array_scan.gif", fps = 4)
+gif(anim, "plots/array_scan.gif", fps = 10)
