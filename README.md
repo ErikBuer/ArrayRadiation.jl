@@ -3,8 +3,6 @@
 [![](https://img.shields.io/badge/docs-latest-blue.svg)](https://erikbuer.github.io/ArrayRadiation.jl/dev/)
 
 
-**Work-in-progress**
-
 Calculate the radiation pattern of an array of emitters
 
 The package is currently not a registered package.
