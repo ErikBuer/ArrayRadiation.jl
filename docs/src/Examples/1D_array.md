@@ -1,5 +1,7 @@
 # 1D Array
 
+## 1D Radiation Pattern
+
 Lets create an array and look at its radiation pattern.
 
 First we must place the antenna elements. Lets give them λ/2 spacing and spread them linearly.
@@ -7,6 +9,7 @@ First we must place the antenna elements. Lets give them λ/2 spacing and spread
 ``` @example StaticArray
 using Plots;
 gr();
+using LaTeXStrings
 
 using ArrayRadiation
 
@@ -74,8 +77,8 @@ GΩ_lin = broadcast(GΩ, k_xyz).*element_gain_approximation
 GΩ_dB = DspUtility.pow2db.(abs.(GΩ_lin))
 
 plot(angleDeg, GΩ_dB,
-    xlabel = "Angle [deg]",
-    ylabel = "GΩ [dB]",
+    xlabel = "Elevation [deg]",
+    ylabel = L"G_Ω\; [dB]",
     title  = "Array gain",
     ylims  = (-30, 18),
     reuse  = true,
@@ -83,3 +86,64 @@ plot(angleDeg, GΩ_dB,
 )
 
 ```
+
+We can now inspect the radiation pattern in one dimension. This is useful to get a sense of the performance.
+
+However one is often interrested in the complete radiaiton pattern in 3 dimensions.
+
+## 2D Radiation Pattern
+
+``` @example StaticArray
+
+resolution = 201
+
+# Create a 2D grid for x and y values
+x_vals = LinRange(-1, 1, resolution)
+y_vals = LinRange(-1, 1, resolution)
+
+# Initialize matrices to store the k-values
+k_z = zeros(resolution, resolution)
+GΩ_lin = zeros(resolution, resolution)
+
+for m in 1:resolution
+    for n in 1:resolution
+        k_z[m, n] = sqrt(max(0, 1 - x_vals[n]^2 - y_vals[m]^2))
+    end
+end
+
+heatmap(x_vals, y_vals, k_z, xlabel=L"\hat{k}_x", ylabel=L"\hat{k}_y", title=L"\hat{k}_z", color=:jet1)
+
+```
+
+``` @example StaticArray
+
+element_gain(elevation) = Kspace.cos_taper.(elevation, 1.4)
+
+# Calculate k_z values and gain values
+for m in 1:resolution
+    for n in 1:resolution
+        k_x = x_vals[n]
+        k_y = y_vals[m]
+        k_z = sqrt(max(0, 1 - k_x^2 - k_y^2))
+        
+        # Create the k vector for each (k_x, k_y, k_z) triplet
+        k_xyz = 2π.*[k_x, k_y, k_z]
+
+        θ = Kspace.k2elevation(k_xyz)
+        
+        # Calculate the gain using the provided Kspace.gain_1D function
+        GΩ_lin[m, n] = GΩ(k_xyz)*element_gain(θ)
+        
+    end
+end
+
+# Convert the gain to dB
+GΩ_dB = DspUtility.pow2db.(abs.(GΩ_lin))
+
+GΩ_dB = clamp.(GΩ_dB, -40, Inf)
+
+# Plot the result as a heatmap
+heatmap(x_vals, y_vals, GΩ_dB, xlabel=L"\hat{k}_x", ylabel=L"\hat{k}_y", title=L"G_Ω(\vec{k})\; [dB]", color=:jet1)
+
+```
+
