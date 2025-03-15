@@ -1,6 +1,6 @@
 module DspUtility
 
-export linear_array
+export linear_array, antenna_matrix
 
 
 """
@@ -70,9 +70,55 @@ function energy(signal)
 end
 
 """
-Generate locations (1D) for an x*λ spaced array of N elements. N is even.
+Generate locations (1D) for a evenly spaced array of N elements. N is even.
+
+## Arguments
+- `N`          	Number of elements (assumed to be even).
+- `separation` 	Distance between adjacent elements.
 """
-linear_array(N, separation_lambda) = LinRange(- (N - 1) / 2 * separation_lambda, (N - 1) / 2 * separation_lambda, N)
+linear_array(N, separation) = LinRange(- (N - 1) / 2 * separation, (N - 1) / 2 * separation, N)
+
+"""
+    antenna_matrix(M, N, separation)
+
+Generate locations (2D) for an evenly spaced MxN matrix of antenna elements, 
+ensuring symmetry around the origin.
+
+All elements are placed in the XY-plane.
+
+## Arguments
+- `M`          : Number of elements along the Y-axis.
+- `N`          : Number of elements along the X-axis.
+- `separation` : Distance between adjacent elements.
+
+## Example
+
+```jldoctest
+julia> using ArrayRadiation
+
+julia> DspUtility.antenna_matrix(1, 2, 0.5)
+1×2 Matrix{Tuple{Float64, Float64, Float64}}:
+ (-0.25, 0.0, 0.0)  (0.25, 0.0, 0.0)
+
+julia> DspUtility.antenna_matrix(1, 3, 1/2)
+1×3 Matrix{Tuple{Float64, Float64, Float64}}:
+ (-0.5, 0.0, 0.0)  (0.0, 0.0, 0.0)  (0.5, 0.0, 0.0)
+
+julia> DspUtility.antenna_matrix(2, 1, 1/2)
+2×1 Matrix{Tuple{Float64, Float64, Float64}}:
+ (0.0, -0.25, 0.0)
+ (0.0, 0.25, 0.0)
+````
+"""
+function antenna_matrix(M, N, separation)
+    x_positions = LinRange(-(N - 1) / 2 * separation, (N - 1) / 2 * separation, N)
+    y_positions = LinRange(-(M - 1) / 2 * separation, (M - 1) / 2 * separation, M)
+
+    # Create a matrix of 3D coordinate vectors
+    r_xyz = reshape([(x, y, 0.0) for y in y_positions for x in x_positions], M, N)
+
+    return r_xyz
+end
 
 """
     discard_low_values(scalar_value::Real, lower_limit::Real)
