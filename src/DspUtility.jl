@@ -75,7 +75,7 @@ Generate locations (1D) for an x*λ spaced array of N elements. N is even.
 linear_array(N, separation_lambda) = LinRange(- (N - 1) / 2 * separation_lambda, (N - 1) / 2 * separation_lambda, N)
 
 """
-    discard_lower_values(scalar_value::Real, lower_limit::Real)
+    discard_low_values(scalar_value::Real, lower_limit::Real)
 
 This function takes a scalar value and compares it against a specified lower limit.
 If the scalar value is below the `lower_limit`, the function returns `nothing`.
@@ -89,14 +89,14 @@ Otherwise, it returns the scalar value unchanged.
 ``` jldoctest
 julia> using ArrayRadiation
 
-julia> ArrayRadiation.DspUtility.discard_lower_values(50, 40)
+julia> ArrayRadiation.DspUtility.discard_low_values(50, 40)
 50
 
-julia> ArrayRadiation.DspUtility.discard_lower_values(30, 40)
+julia> ArrayRadiation.DspUtility.discard_low_values(30, 40)
 
 ```
 """
-function discard_lower_values(scalar_value::Real, lower_limit::Real)
+function discard_low_values(scalar_value::Real, lower_limit::Real)
     if scalar_value < lower_limit
         return nothing
     else
