@@ -30,6 +30,7 @@ makedocs(
             "Examples/window_function.md",
             "Examples/monopulse_pattern.md",
             "Examples/beem_steering.md",
+            "Examples/2D_array.md",
         ],
     ],
     doctest  = true,

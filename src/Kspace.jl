@@ -79,32 +79,68 @@ end
 
 
 """
-	gain_1D(k_xyz::AbstractVector{<:Real}, Ge::Real, r_λ::AbstractVector, element_weighting::AbstractVector)
+	gain_1D(k_xyz::AbstractVector{<:Real}, Ge::Real, r_x::AbstractVector, element_weights::AbstractVector)
 
-Calculate `GΩ(k)`, the angular domain gain in direction k for an array with specified element weights.
+Calculate GΩ(k), the angular domain gain in direction k for an array with specified element weights.
 
 # Arguments
 
 - `k_xyz`			    k-space vector.
 - `Ge`					The antena gain in direction `k_xyz` [dB].
-- `r` 					The placement of each antenna element.
-- `element_weighting`	The complex weight of each element.
+- `r_x` 				The placement of each antenna element. All elements are placed along the x-axis.
+- `element_weights`	    The complex weight of each element.
 
 ## References
 
 - R. A. Dana, Electronically Scanned Arrays and K-Space Gain Formulation, Springer, 2019.
 """
-function gain_1D(k_xyz::AbstractVector{<:Real}, Ge::Real, r::AbstractVector, element_weighting::AbstractVector)
-    M = length(r)
-	r_xyz = [[r_i, 0, 0] for r_i in r]
+function gain_1D(k_xyz::AbstractVector{<:Real}, Ge::Real, r_x::AbstractVector, element_weights::AbstractVector)
+    M = length(r_x)
+	r_xyz = [[r_i, 0, 0] for r_i in r_x]
 	
-	W = element_weighting
+	W = element_weights
 
 	# Array normal vector
 	k0 = [ 0.0, 0.0, 2π ]
 
 	Σ = sum
 	numerator(m) = W[m] * exp(-im * dot(k_xyz - k0, r_xyz[m]))
+	vecIndex = collect(Integer, 1:M)
+	return Ge * abs.(Σ(numerator, vecIndex))^2 / Σ(abs.(W) .^ 2)
+end
+
+"""
+	gain(k_xyz::AbstractVector{<:Real}, Ge::Real, r_xyz::AbstractArray, element_weights::AbstractArray)
+
+Calculate GΩ(k), the angular domain gain in direction k for an array with specified element weights.
+
+# Arguments
+
+- `k_xyz`			    k-space vector.
+- `Ge`					The antena gain in direction `k_xyz` [dB].
+- `r_xyz` 				The placement of each antenna element. in 
+- `element_weights`	    The complex weight of each element. Must have the same size/shape as `r_xyz`.
+
+## References
+
+- R. A. Dana, Electronically Scanned Arrays and K-Space Gain Formulation, Springer, 2019.
+"""
+function gain(k_xyz::AbstractVector{<:Real}, Ge::Real, r_xyz::AbstractArray, element_weights::AbstractArray)
+    if size(r_xyz) != size(element_weights)
+        @error "element_weights must have the same size/shape as r_xyz."
+        return nothing
+    end
+
+    _r_xyz = reshape(r_xyz, :)
+    W = reshape(element_weights, :)
+
+    M = length(_r_xyz)
+
+	# Array normal vector
+	k0 = [ 0.0, 0.0, 2π ]
+
+	Σ = sum
+	numerator(m) = W[m] * exp(-im * dot(k_xyz - k0, _r_xyz[m]))
 	vecIndex = collect(Integer, 1:M)
 	return Ge * abs.(Σ(numerator, vecIndex))^2 / Σ(abs.(W) .^ 2)
 end

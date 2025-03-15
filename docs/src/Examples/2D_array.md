@@ -1,35 +1,38 @@
-# 1D Array
+# 2D Array
 
 ## 1D Radiation Pattern
 
-Lets create an array and look at its radiation pattern.
+Lets create a 2D antenna array and look at its radiation pattern.
 
-First we must place the antenna elements. Lets give them λ/2 spacing and spread them linearly.
+First we must place the antenna elements. Lets give them λ/2 spacing and spread them equally.
 
 ``` @example StaticArray
 using Plots;
 gr();
 using LaTeXStrings
-
 using ArrayRadiation
 
 element_separation_λ = 1/2;
 
 # Place elements symmetrically around zero
-element_count = 32;
+axis_element_count = 32;
 
-r = ArrayRadiation.linear_array(element_count, element_separation_λ)
+r_xyz = ArrayRadiation.antenna_matrix(axis_element_count, axis_element_count, element_separation_λ)
 
-scatter(r, zeros(length(r)), 
+
+# Flatten and extract x and y coordinates
+x_positions = [r[1] for r in vec(r_xyz)]
+y_positions = [r[2] for r in vec(r_xyz)]
+
+# Plot
+scatter(x_positions, y_positions, 
     markershape=:circle, 
-    # markercolor=:blue, 
     markersize=4, 
-    xlabel="Position [λ]", 
+    xlabel="X [λ]", 
+    ylabel="Y [λ]", 
     title="Element Positions", 
     legend=false, 
-    #grid=false,
-    yticks= false,
-    ylims  = (-1, 1),
+    grid=true
 )
 ```
 
@@ -49,19 +52,7 @@ But in this example we give all elements a uniform weight:
 
 ``` @example StaticArray
 # Antenna element weigth
-W = ones(element_count)
-
-scatter(r, W, 
-    marker=:circle, 
-    linecolor=:blue, 
-    markersize=4, 
-    xlabel="Element Position [λ]", 
-    ylabel="Weight", 
-    title="Antenna Element Weights", 
-    legend=false, 
-    grid=true,
-    ylims  = (0, 1.1),
-)
+W = ones(axis_element_count, axis_element_count)
 ```
 
 With this defined, we can calculate the radiation pattern of the array.
@@ -71,7 +62,7 @@ With this defined, we can calculate the radiation pattern of the array.
 k_xyz = 2π*Kspace.elevation2k_hat.(angleRad)
 
 # Map K-space gain calculation function.
-GΩ(k) = Kspace.gain_1D(k, 1, r, W)
+GΩ(k) = Kspace.gain(k, 1, r_xyz, W)
 GΩ_lin = broadcast(GΩ, k_xyz).*element_gain_approximation
 
 GΩ_dB = DspUtility.pow2db.(abs.(GΩ_lin))
@@ -80,11 +71,10 @@ plot(angleDeg, GΩ_dB,
     xlabel = "Elevation [deg]",
     ylabel = L"G_Ω\; [dB]",
     title  = "Array gain",
-    ylims  = (-30, 18),
+    ylims  = (-20, 30),
     reuse  = true,
     legend = false
 )
-
 ```
 
 We can now inspect the radiation pattern in one dimension. This is useful to get a sense of the performance.
@@ -99,7 +89,7 @@ For simplicity, we calculate the radiation pattern from ``k_x, k_y ∈ [-2\pi, 2
 
 ``\vec{k} = k_x\hat{x} + k_y\hat{y} + k_z\hat{z}``
 
-This yields invalid ``\vec{k}`` vectors with a magnitude greater than 2π (in our case) in the corners of the plot.
+This yields invalid ``\vec{k}`` vectors with a magniture greater than 2π (in our case) in the corners of the plot.
 
 But as you can see in the resulting radiation pattern, due to our element gain pattern, the array gain is nothing here anyways.
 
@@ -142,8 +132,6 @@ for m in 1:resolution
         k_xyz = 2π.*[k_x, k_y, k_z]
 
         θ = Kspace.k2elevation(k_xyz)
-        
-        # Calculate the gain using the provided Kspace.gain_1D function
         GΩ_lin[m, n] = GΩ(k_xyz)*element_gain(θ)
         
     end
@@ -158,6 +146,7 @@ GΩ_dB = clamp.(GΩ_dB, -40, Inf)
 heatmap(x_vals, y_vals, GΩ_dB, 
     xlabel=L"\hat{k}_x", 
     ylabel=L"\hat{k}_y", 
-    title=L"G_Ω(\vec{k})\; [dB]", color=:jet1
+    title=L"G_Ω(\vec{k})\; [dB]",
+    color=:jet1
 )
 ```
