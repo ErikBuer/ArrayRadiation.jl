@@ -13,11 +13,11 @@ k_xyz(θ::Real, ϕ::Real, λ0::Real)::Vector = 2*π/λ0 * [sin(θ)*cos(ϕ), sin(
     k2elevation(k_xyz::Vector)::Real
 
     Calculate the elevation angle θ from a k-space vector.
-    The elevation angle is the angle between the vector and the XY-plane.
+    The elevation angle is the angle between the z unit vector and the the k vector.
 """
 function k2elevation(k_xyz::Vector)::Real
 	kx, ky, kz = k_xyz
-	return atan(kz, sqrt(kx^2 + ky^2))  # Elevation angle in radians.
+	return π/2-atan(kz, sqrt(kx^2 + ky^2))  # Elevation angle in radians.
 end
 
 """
