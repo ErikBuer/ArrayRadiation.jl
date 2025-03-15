@@ -93,6 +93,15 @@ However one is often interrested in the complete radiaiton pattern in 3 dimensio
 
 ## 2D Radiation Pattern
 
+The above antenna has a 1D antenna array. The antenna does however radiate in all directions.
+
+The default element radiation pattern `Kspace.cos_taper` only forward, so a 2D plot, shows all details of the current array.
+
+For simplicity, we calculate the radiation pattern from ``\vec{k}_x, \vec{k}_y ∈ [-2\pi, 2\pi]``.
+
+This makes invalid ``\vec{k}`` with magiture greater than 2π (in our case) in the corners of the plot.
+But as you can see in the resulting plots, due to our element radiation pattern, the gain is nothing here anyways.
+
 ``` @example StaticArray
 resolution = 201
 
@@ -113,7 +122,7 @@ end
 heatmap(x_vals, y_vals, k_z, 
     xlabel=L"\hat{k}_x",
     ylabel=L"\hat{k}_y",
-    title=L"\hat{k}_z",
+    title="Values of "*L"\hat{k}_z",
     color=:jet1
 )
 ```
