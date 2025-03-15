@@ -94,7 +94,6 @@ However one is often interrested in the complete radiaiton pattern in 3 dimensio
 ## 2D Radiation Pattern
 
 ``` @example StaticArray
-
 resolution = 201
 
 # Create a 2D grid for x and y values
@@ -111,12 +110,15 @@ for m in 1:resolution
     end
 end
 
-heatmap(x_vals, y_vals, k_z, xlabel=L"\hat{k}_x", ylabel=L"\hat{k}_y", title=L"\hat{k}_z", color=:jet1)
-
+heatmap(x_vals, y_vals, k_z, 
+    xlabel=L"\hat{k}_x",
+    ylabel=L"\hat{k}_y",
+    title=L"\hat{k}_z",
+    color=:jet1
+)
 ```
 
 ``` @example StaticArray
-
 element_gain(elevation) = Kspace.cos_taper.(elevation, 1.4)
 
 # Calculate k_z values and gain values
@@ -143,7 +145,9 @@ GΩ_dB = DspUtility.pow2db.(abs.(GΩ_lin))
 GΩ_dB = clamp.(GΩ_dB, -40, Inf)
 
 # Plot the result as a heatmap
-heatmap(x_vals, y_vals, GΩ_dB, xlabel=L"\hat{k}_x", ylabel=L"\hat{k}_y", title=L"G_Ω(\vec{k})\; [dB]", color=:jet1)
-
+heatmap(x_vals, y_vals, GΩ_dB, 
+    xlabel=L"\hat{k}_x", 
+    ylabel=L"\hat{k}_y", 
+    title=L"G_Ω(\vec{k})\; [dB]", color=:jet1
+)
 ```
-
