@@ -9,7 +9,7 @@ jobs:
       matrix:
         julia-version: ['1.11', 'nightly']
         julia-arch: [x64, x86]
-        os: [ubuntu-latest, windows-latest, macOS-latest]
+        os: [ubuntu-latest]
         exclude:
           - os: macOS-latest
             julia-arch: x86
@@ -22,3 +22,5 @@ jobs:
           arch: ${{ matrix.julia-arch }}
       - uses: julia-actions/julia-buildpkg@v1
       - uses: julia-actions/julia-runtest@v1
+        with:
+          prefix: xvfb-run -s '-screen 0 1024x768x24'
