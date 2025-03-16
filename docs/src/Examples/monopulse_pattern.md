@@ -14,7 +14,7 @@ element_separation_λ = 1/2;
 element_count = 32;
 r = ArrayRadiation.linear_array(element_count, element_separation_λ)
 
-# Antenna element weigth
+# Antenna element weight
 W = Window.taylor(32,4,-25)
 W2 = Window.split_window(copy(W))
 

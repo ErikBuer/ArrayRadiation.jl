@@ -13,7 +13,7 @@ linearArray(N) = LinRange(-N/2+0.5, N/2-0.5, N)
 
 r = linearArray(4)
 
-# Antenna element weigth
+# Antenna element weight
 W = ones(size(r))
 # Frequency of interrest
 freq = 1e9

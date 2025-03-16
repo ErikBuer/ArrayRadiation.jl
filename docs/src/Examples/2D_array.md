@@ -51,7 +51,7 @@ We can apply different weights to each element to create different beam directio
 But in this example we give all elements a uniform weight:
 
 ``` @example StaticArray
-# Antenna element weigth
+# Antenna element weight
 W = ones(axis_element_count, axis_element_count)
 ```
 

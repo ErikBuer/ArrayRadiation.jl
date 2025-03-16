@@ -33,7 +33,7 @@ element_gain_approximation = Kspace.cos_taper.(angleRad)
 #_______________________________________________________________
 
 
-# Antenna element weigth
+# Antenna element weight
 W = ones(axis_element_count, axis_element_count)
 
 #_______________________________________________________________
