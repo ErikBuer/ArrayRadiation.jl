@@ -30,5 +30,5 @@ plt = surface!(ax, xs, ys, zs,
     colormap=:jet1
 )
 Colorbar(fig[1,2], plt, label="Gain")
-
-save("plots/Default Antenna Pattern.png", fig)
+fig
+#save("plots/Default Antenna Pattern.png", fig)

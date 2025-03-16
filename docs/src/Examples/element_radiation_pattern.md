@@ -1,35 +1,28 @@
 # Default Element Radiation Pattern
 
 ``` @example elementRadiationPattern
-using Plots
-gr()
-
+using GLMakie
 using ArrayRadiation
 
+angleRad = LinRange(π / 2, -π / 2, 81);
 
-angleRad = LinRange(π / 2, -π / 2, 51);
-angleDeg = rad2deg.(angleRad);
-
-element_gain_approximation = Kspace.cos_taper.(angleRad)
-element_gain_approximation_dB = DspUtility.pow2db(element_gain_approximation)
+Ge = Kspace.cos_taper.(angleRad)
+Ge_dB = DspUtility.pow2db(Ge)
 
 y_lower_limit = -30 # dB
-element_gain_approximation_dB = clamp.(element_gain_approximation_dB, y_lower_limit, Inf)
+Ge_dB = clamp.(Ge_dB, y_lower_limit, Inf)
 
-
-# Create the polar plot
-plot(angleRad, element_gain_approximation_dB, 
-    proj=:polar, 
-    m=:none, lw=2,
-    linecolor=:blue, 
-    legend=false,
-    grid=true,
-    gridalpha=0.4,
-    gridlinewidth=1,
-    ylims=(y_lower_limit, 0.5)
+# Create figure and polar axis
+f = Figure()
+ax = PolarAxis(f[1, 1], 
+    title = "Element Radiation Pattern",
+    thetalimits = (-pi/2, pi/2),
+    radius_at_origin = -30,
+    theta_0 = -pi/2,
+    direction = -1,
 )
-
-title!("Element Radiation Pattern")
+lines!(ax, angleRad, Ge_dB, color = :blue, linewidth = 2)
+f
 ```
 
 ``` @example 3dRadiationPattern
