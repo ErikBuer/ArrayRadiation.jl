@@ -12,8 +12,9 @@ k_xyz(θ::Real, ϕ::Real, λ0::Real)::Vector = 2*π/λ0 * [sin(θ)*cos(ϕ), sin(
 """
     k2elevation(k_xyz::Vector)::Real
 
-    Calculate the elevation angle θ from a k-space vector.
-    The elevation angle is the angle between the z unit vector and the the k vector.
+Calculate the elevation angle θ from a k-space vector.
+
+The elevation angle is the angle between the z unit vector and the the k vector.
 """
 function k2elevation(k_xyz::Vector)::Real
 	kx, ky, kz = k_xyz
@@ -23,8 +24,9 @@ end
 """
     elevation2k_hat(θ::Real)::Vector{Real}
 
-    Convert an elevation angle θ (in radians) to a unit-length k-space vector in the XZ-plane.
-    The resulting vector has the form [sin(θ), 0, cos(θ)].
+Convert an elevation angle θ (in radians) to a unit-length k-space vector in the XZ-plane.
+    
+The resulting vector has the form [sin(θ), 0, cos(θ)].
 """
 function elevation2k_hat(θ::Real)::Vector{Real}
     return [sin(θ), 0, cos(θ)]
@@ -44,14 +46,17 @@ end
 """
     azimuth2k_hat(ϕ::Real)::Vector{Real}
 
-    Convert an azimuth angle ϕ (in radians) to a unit-length k-space vector in the XY-plane.
-    The resulting vector has the form [cos(ϕ), sin(ϕ), 0].
+Convert an azimuth angle ϕ (in radians) to a unit-length k-space vector in the XY-plane.
+
+The resulting vector has the form [cos(ϕ), sin(ϕ), 0].
 """
 function azimuth2k_hat(ϕ::Real)::Vector{Real}
     return [cos(ϕ), sin(ϕ), 0]
 end
 
 """
+    cos_taper(θ::Real, α = 1.4)
+
 Calculate cosine taper for elevation angle θ [rad].
 Optionally provide α. α=1.4 accounts for mutual coupling between elements.
 
@@ -65,6 +70,7 @@ function cos_taper(θ::Real, α = 1.4)
 end
 
 """
+    cos_taper_k_hat(k_hat_x::Real, k_hat_y::Real, α = 1.4)
 
 Calculate cosine taper for normalized k-space vector [kx, ky, kz]/|k|.
 Where |k| = 2π/λ0
@@ -74,7 +80,10 @@ Optionally provide α. α=1.4 accounts for mutual coupling between elements.
 """
 cos_taper_k_hat(k_hat_x::Real, k_hat_y::Real, α = 1.4) = (1-(k_hat_x[1]^2+k_hat_y[1]^2))^(α/2)
 
+
 """
+    maximum_element_separation(max_look_angle_deg)
+
 Calculate the maximum array element separation for maximum look angle.
 Result is fraction of wavelenth.
 """
