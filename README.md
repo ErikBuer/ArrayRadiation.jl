@@ -2,8 +2,12 @@
 
 [![](https://img.shields.io/badge/docs-latest-blue.svg)](https://erikbuer.github.io/ArrayRadiation.jl/dev/)
 
+## Features
 
-Calculate the radiation pattern of an array of emitters
+- Calculate gain pattern for arbitrary arrays.
+- Use various element weight functions (windows).
+
+## Installation
 
 The package is currently not a registered package.
 Add it using ht following command.
@@ -15,4 +19,4 @@ Add it using ht following command.
 ## Building docs locally
 
 To speed up docs generation locally, there is a separate make_local.jl file.
-Run this file from project root.
+Run this file from the project root.
