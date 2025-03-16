@@ -12,6 +12,9 @@ using .FrequencyDomain
 include("Kspace.jl")
 using .Kspace
 
-export ArrayTools, DspUtility, Kspace, FrequencyDomain, Window
+include("AntennaElement.jl")
+using .AntennaElement
+
+export ArrayTools, DspUtility, Kspace, FrequencyDomain, Window, AntennaElement
 
 end

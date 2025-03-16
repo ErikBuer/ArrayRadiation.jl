@@ -24,14 +24,16 @@ makedocs(
     sitename = "ArrayRadiation.jl",
     pages = Any[
         "index.md",
+        "api_reference.md",
         "Examples"  => Any[
-            "Examples/1D_array.md",
             "Examples/element_radiation_pattern.md",
+            "Examples/1D_array.md",
+            "Examples/2D_array.md",
             "Examples/linear_array_polar_gain_pattern.md",
             "Examples/window_function.md",
             "Examples/monopulse_pattern.md",
             "Examples/beem_steering.md",
-            "Examples/2D_array.md",
+            
         ],
     ],
     doctest  = true,
