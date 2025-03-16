@@ -34,7 +34,7 @@ scatter(r, zeros(length(r)),
 ```
 
 These elements now represent the antenna placements.
-We use the `cos_taper` funciton to approzimate the element gain.
+We use the `cos_taper` function to approzimate the element gain.
 
 ``` @example StaticArray
 angleRad = LinRange(π / 2, -π / 2, 501);
