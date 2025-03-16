@@ -4,8 +4,10 @@
 
 ## Features
 
-- Calculate gain pattern for arbitrary arrays.
-- Use various element weight functions (windows).
+- Empirical radiation pattern models for common antennas
+- Common element weight functions (windows)
+- Calculate gain pattern for arbitrary arrays
+- Support for regular and irregular arrays
 
 ## Installation
 
