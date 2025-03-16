@@ -37,7 +37,7 @@ scatter(x_positions, y_positions,
 ```
 
 These elements now represent the antenna placements.
-We use the `cos_taper` funciton to approzimate the element gain.
+We use the `cos_taper` function to approzimate the element gain.
 
 ``` @example StaticArray
 angleRad = LinRange(π / 2, -π / 2, 501);
@@ -51,11 +51,15 @@ We can apply different weights to each element to create different beam directio
 But in this example we give all elements a uniform weight:
 
 ``` @example StaticArray
-# Antenna element weigth
+# Antenna element weight
 W = ones(axis_element_count, axis_element_count)
 ```
 
 With this defined, we can calculate the radiation pattern of the array.
+
+The propagation direciton is decided by the vector ``\vec{k}``, as opposed to elevation and azimuth angles (``θ, ϕ``).
+
+``||\vec{k}|| = \frac{2π}{λ_0}``
 
 ``` @example StaticArray
 # Calculate K-space vectors

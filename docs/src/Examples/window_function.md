@@ -17,7 +17,7 @@ We can apply different weights to each element so lets look at how this will aff
 Lets compare a linear weight to a commonly used Taylor weighting scheme.
 
 ``` @example WindowWeights
-# Antenna element weigth
+# Antenna element weight
 W = ones(element_count)
 W2 = Window.taylor(32,4,-25)
 

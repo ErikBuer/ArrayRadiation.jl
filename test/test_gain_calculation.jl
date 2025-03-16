@@ -39,7 +39,7 @@ anim = @animate for (index, scan_angle) in enumerate(scan_angles)
 	phase_increment = α(scan_angle, element_separation_λ)
 	W_ang = LinRange(0, (element_count - 1) * phase_increment, element_count)
 
-	# Antenna element weigth
+	# Antenna element weight
 	W = exp.(i .* W_ang)# Example of pointing to an angle.
 
 	# Map angular domain gain calculation function.

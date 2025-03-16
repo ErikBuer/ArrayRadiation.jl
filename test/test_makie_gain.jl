@@ -7,7 +7,7 @@ using ArrayRadiation
 θs = range(0, π, length=181)    # angle relative to +z
 angles = [(φ,θ) for φ in φs, θ in θs]
 
-
+# Our antennas gain as a function of elevation and azimuth angle.
 Ge(θ,φ) = Kspace.cos_taper(θ)
 
 # Get radius (the Element Gain) at each angle
@@ -30,5 +30,5 @@ plt = surface!(ax, xs, ys, zs,
     colormap=:jet1
 )
 Colorbar(fig[1,2], plt, label="Gain")
-
-save("plots/Default Antenna Pattern.png", fig)
+fig
+#save("plots/Default Antenna Pattern.png", fig)
