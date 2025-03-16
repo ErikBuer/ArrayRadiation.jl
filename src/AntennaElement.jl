@@ -50,7 +50,7 @@ The model is only valid for θ ∈ [−π/2, π/2].
 
 The model is based on the following geometry:
 
-- Thhree directors, spaced 0.20λ apart.
+- Three directors, spaced 0.20λ apart.
 - Director lengths: [0.428λ, 0.424λ, 0.428λ]
 - Reflector length of 0.482λ
 
