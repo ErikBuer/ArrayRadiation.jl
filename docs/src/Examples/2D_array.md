@@ -57,6 +57,10 @@ W = ones(axis_element_count, axis_element_count)
 
 With this defined, we can calculate the radiation pattern of the array.
 
+The propagation direciton is decided by the vector ``\vec{k}``, as opposed to elevation and azimuth angles (``θ, ϕ``).
+
+``||\vec{k}|| = \frac{2π}{λ_0}``
+
 ``` @example StaticArray
 # Calculate K-space vectors
 k_xyz = 2π*Kspace.elevation2k_hat.(angleRad)
