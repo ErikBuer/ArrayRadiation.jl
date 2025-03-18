@@ -16,7 +16,7 @@ function cos_taper(θ::Real, α = 1.4)
 end
 
 """
-    half_wave_dipole(θ::AbstractFloat, ϕ::AbstractFloat)
+    half_wave_dipole(θ::AbstractFloat, ϕ::AbstractFloat=0.0)
 
 Calculate approximate radiation pattern for a half wave dipole.
 
@@ -30,7 +30,7 @@ Calculate approximate radiation pattern for a half wave dipole.
 - Costa, Abrao, Rego, A Method for Approximating Directivity Expressions in Generalized Radiation Patterns, Elsevier, 2025.
 
 """
-function half_wave_dipole(θ::AbstractFloat, ϕ::AbstractFloat)
+function half_wave_dipole(θ::AbstractFloat, ϕ::AbstractFloat=0.0)
     # Variables for empirical modeling.
     c1 = 0.7796
     c2 = 0.2192
@@ -38,7 +38,7 @@ function half_wave_dipole(θ::AbstractFloat, ϕ::AbstractFloat)
 end
 
 """
-    cardioid(θ::AbstractFloat, ϕ::AbstractFloat)
+    cardioid(θ::AbstractFloat, ϕ::AbstractFloat=0.0)
 
 Calculate approximate radiation pattern for a cardioid antenna.
 
@@ -52,12 +52,12 @@ Calculate approximate radiation pattern for a cardioid antenna.
 - Costa, Abrao, Rego, A Method for Approximating Directivity Expressions in Generalized Radiation Patterns, Elsevier, 2025.
 
 """
-function cardioid(θ::AbstractFloat, ϕ::AbstractFloat)
+function cardioid(θ::AbstractFloat, ϕ::AbstractFloat=0.0)
     return 1 + cos(θ)
 end
 
 """
-    yagi_uda(θ::AbstractFloat, ϕ::AbstractFloat)
+    yagi_uda(θ::AbstractFloat, ϕ::AbstractFloat=0.0)
 
 Calculate approximate radiation pattern for a Yagi Uda antenna.
 
@@ -79,7 +79,7 @@ The model is based on the following geometry:
 - Costa, Abrao, Rego, A Method for Approximating Directivity Expressions in Generalized Radiation Patterns, Elsevier, 2025.
 
 """
-function yagi_uda(θ::AbstractFloat, ϕ::AbstractFloat)
+function yagi_uda(θ::AbstractFloat, ϕ::AbstractFloat=0.0)
     if abs(θ)>π/2
         @warn "The model is only valid for θ ∈ [−π/2, π/2]. Current value: θ = $θ"
     end
@@ -94,7 +94,7 @@ function yagi_uda(θ::AbstractFloat, ϕ::AbstractFloat)
 end
 
 """
-    microstrip_patch(θ::AbstractFloat, ϕ::AbstractFloat)
+    microstrip_patch(θ::AbstractFloat, ϕ::AbstractFloat=0.0)
 
 Calculate approximate radiation pattern for a microstrip patch antenna.
 
@@ -110,7 +110,7 @@ The model is only valid for θ ∈ [−π/2, π/2].
 - Costa, Abrao, Rego, A Method for Approximating Directivity Expressions in Generalized Radiation Patterns, Elsevier, 2025.
 
 """
-function microstrip_patch(θ::AbstractFloat, ϕ::AbstractFloat)
+function microstrip_patch(θ::AbstractFloat, ϕ::AbstractFloat=0.0)
     if abs(θ)>π/2
         @warn "The model is only valid for θ ∈ [−π/2, π/2]. Current value: θ = $θ"
     end

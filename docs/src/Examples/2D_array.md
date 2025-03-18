@@ -87,7 +87,7 @@ However one is often interrested in the complete radiaiton pattern in all dimens
 
 ## 2D Radiation Pattern
 
-The default element radiation pattern `AntennaElement.cos_taper` only radiate forward, so a 2D plot shows all details of the current array.
+The element radiation pattern `AntennaElement.cos_taper` only radiate forward, so a 2D plot shows all details of the current array.
 
 For simplicity, we calculate the radiation pattern from ``k_x, k_y ∈ [-2\pi, 2\pi]``.
 
