@@ -28,7 +28,7 @@ scatter(x_positions, y_positions,
 angleRad = LinRange(π / 2, -π / 2, 501);
 angleDeg = rad2deg.(angleRad);
 
-element_gain_approximation = Kspace.cos_taper.(angleRad)
+element_gain_approximation = AntennaElement.cos_taper.(angleRad)
 
 #_______________________________________________________________
 

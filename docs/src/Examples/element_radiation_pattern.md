@@ -6,7 +6,7 @@ using ArrayRadiation
 
 angleRad = LinRange(π / 2, -π / 2, 81);
 
-Ge = Kspace.cos_taper.(angleRad)
+Ge = AntennaElement.cos_taper.(angleRad)
 Ge_dB = DspUtility.pow2db(Ge)
 
 y_lower_limit = -30 # dB
@@ -36,7 +36,7 @@ using ArrayRadiation
 angles = [(φ,θ) for φ in φs, θ in θs]
 
 # Our antennas gain as a function of elevation and azimuth angle.
-Ge(θ,φ) = Kspace.cos_taper(θ)
+Ge(θ,φ) = AntennaElement.cos_taper(θ)
 
 # Get radius (the Element Gain) at each angle
 rs = [Ge(θ, φ) for (φ,θ) in angles]

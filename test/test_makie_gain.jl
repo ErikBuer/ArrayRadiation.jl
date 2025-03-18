@@ -8,7 +8,7 @@ using ArrayRadiation
 angles = [(φ,θ) for φ in φs, θ in θs]
 
 # Our antennas gain as a function of elevation and azimuth angle.
-Ge(θ,φ) = Kspace.cos_taper(θ)
+Ge(θ,φ) = AntennaElement.cos_taper(θ)
 
 # Get radius (the Element Gain) at each angle
 rs = [Ge(θ, φ) for (φ,θ) in angles]

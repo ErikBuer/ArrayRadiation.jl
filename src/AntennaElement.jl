@@ -1,6 +1,21 @@
 module AntennaElement
 
 """
+    cos_taper(θ::Real, α = 1.4)
+
+Calculate cosine taper for elevation angle θ [rad].
+Optionally provide α. α=1.4 accounts for mutual coupling between elements.
+
+- R. A. Dana, Electronically Scanned Arrays and K-Space Gain Formulation, Springer, 2019.
+"""
+function cos_taper(θ::Real, α = 1.4)
+    if (θ>pi/2)
+        return 0
+    end
+    cos(θ)^α
+end
+
+"""
     half_wave_dipole(θ::AbstractFloat, ϕ::AbstractFloat)
 
 Calculate approximate radiation pattern for a half wave dipole.
