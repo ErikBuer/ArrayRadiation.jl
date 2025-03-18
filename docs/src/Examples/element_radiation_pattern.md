@@ -138,7 +138,7 @@ f = Figure()
 ax = PolarAxis(f[1, 1], 
     title = "Microstrip Patch",
     thetalimits = (-pi/2, pi/2),
-    radius_at_origin = -30,
+    radius_at_origin = -10,
     theta_0 = -pi/2,
     direction = -1,
 )
