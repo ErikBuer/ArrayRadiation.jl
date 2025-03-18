@@ -53,7 +53,7 @@ GΩ(k) = ArrayRadiation.Kspace.gain_1D(k, 1, r, W)
 GΩ_lin = broadcast(GΩ, k_xyz)
 
 # Calculate
-GΩ_lin = Kspace.cos_taper.(elevationRad)
+GΩ_lin = AntennaElement.cos_taper.(elevationRad)
 
 
 # Map K-space gain calculation function.

@@ -5,7 +5,7 @@ using ArrayRadiation
 angleRad = LinRange(π / 2, -π / 2, 81);
 angleDeg = rad2deg.(angleRad);
 
-element_gain_approximation = Kspace.cos_taper.(angleRad)
+element_gain_approximation = AntennaElement.cos_taper.(angleRad)
 element_gain_approximation_dB = DspUtility.pow2db(element_gain_approximation)
 
 y_lower_limit = -30 # dB

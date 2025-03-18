@@ -11,7 +11,7 @@ r = ArrayRadiation.linear_array(element_count, element_separation_λ)
 angleRad = LinRange(π / 2, -π / 2, 501);
 angleDeg = rad2deg.(angleRad);
 
-element_gain_approximation = Kspace.cos_taper.(angleRad)
+element_gain_approximation = AntennaElement.cos_taper.(angleRad)
 
 # Uniform weights
 W = ones(element_count)

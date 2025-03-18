@@ -43,7 +43,7 @@ We use the `cos_taper` function to approzimate the element gain.
 angleRad = LinRange(π / 2, -π / 2, 501);
 angleDeg = rad2deg.(angleRad);
 
-element_gain_approximation = Kspace.cos_taper.(angleRad)
+element_gain_approximation = AntennaElement.cos_taper.(angleRad)
 ```
 
 We can apply different weights to each element to create different beam directions.
@@ -87,7 +87,7 @@ However one is often interrested in the complete radiaiton pattern in all dimens
 
 ## 2D Radiation Pattern
 
-The default element radiation pattern `Kspace.cos_taper` only radiate forward, so a 2D plot shows all details of the current array.
+The element radiation pattern `AntennaElement.cos_taper` only radiate forward, so a 2D plot shows all details of the current array.
 
 For simplicity, we calculate the radiation pattern from ``k_x, k_y ∈ [-2\pi, 2\pi]``.
 
@@ -123,7 +123,7 @@ heatmap(x_vals, y_vals, k_z,
 ```
 
 ``` @example StaticArray
-element_gain(elevation) = Kspace.cos_taper.(elevation, 1.4)
+element_gain(elevation) = AntennaElement.cos_taper.(elevation, 1.4)
 
 # Calculate k_z values and gain values
 for m in 1:resolution

@@ -18,7 +18,7 @@ angleDeg = rad2deg.(angleRad);
 
 k_xyz = 2π*Kspace.elevation2k_hat.(angleRad)
 
-element_gain_approximation = Kspace.cos_taper.(angleRad)
+element_gain_approximation = AntennaElement.cos_taper.(angleRad)
 
 """
 Inter-element phase shift for scanning in direction θ [rad].
