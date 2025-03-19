@@ -24,6 +24,7 @@ makedocs(
     sitename = "ArrayRadiation.jl",
     pages = Any[
         "index.md",
+        "api_reference.md",
         "Examples"  => Any[
             "Examples/element_radiation_pattern.md",
             "Examples/1D_array.md",

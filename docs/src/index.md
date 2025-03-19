@@ -1,5 +1,8 @@
 # ArrayRadiation.jl
 
-```@autodocs
-Modules = [ArrayRadiation, ArrayRadiation.DspUtility, ArrayRadiation.Kspace, ArrayRadiation.Window, ArrayRadiation.AntennaElement]
-```
+## Features
+
+- Empirical radiation pattern models for common antennas
+- Common element weight functions (windows)
+- Calculate gain pattern for arbitrary arrays
+- Support for regular and irregular arrays
