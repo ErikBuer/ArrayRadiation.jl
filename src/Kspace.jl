@@ -35,8 +35,9 @@ end
 """
     k2azimuth(k_xyz::Vector)::Real
 
-    Calculate the azimuth angle ϕ from a k-space vector.
-    The azimuth angle is the angle between the projection of the vector on the XY-plane and the x-axis.
+Calculate the azimuth angle ϕ from a k-space vector.
+
+The azimuth angle is the angle between the projection of the vector on the XY-plane and the x-axis.
 """
 function k2azimuth(k_xyz::Vector)::Real
     kx, ky, _ = k_xyz
@@ -58,7 +59,9 @@ end
     cos_taper_k_hat(k_hat_x::Real, k_hat_y::Real, α = 1.4)
 
 Calculate cosine taper for normalized k-space vector [kx, ky, kz]/|k|.
+
 Where |k| = 2π/λ0
+
 Optionally provide α. α=1.4 accounts for mutual coupling between elements.
 
 - R. A. Dana, Electronically Scanned Arrays and K-Space Gain Formulation, Springer, 2019.
@@ -70,6 +73,7 @@ cos_taper_k_hat(k_hat_x::Real, k_hat_y::Real, α = 1.4) = (1-(k_hat_x[1]^2+k_hat
     maximum_element_separation(max_look_angle_deg)
 
 Calculate the maximum array element separation for maximum look angle.
+    
 Result is fraction of wavelenth.
 """
 function maximum_element_separation(max_look_angle_deg)
@@ -85,7 +89,7 @@ Calculate GΩ(k), the angular domain gain in direction k for an array with speci
 # Arguments
 
 - `k_xyz`			    k-space vector.
-- `Ge`					The antena gain in direction `k_xyz` [dB].
+- `Ge`					The antena gain in direction `k_xyz`.
 - `r_x` 				The placement of each antenna element. All elements are placed along the x-axis.
 - `element_weights`	    The complex weight of each element.
 
@@ -116,7 +120,7 @@ Calculate GΩ(k), the angular domain gain in direction k for an array with speci
 # Arguments
 
 - `k_xyz`			    k-space vector.
-- `Ge`					The antena gain in direction `k_xyz` [dB].
+- `Ge`					The antena gain in direction `k_xyz`.
 - `r_xyz` 				The placement of each antenna element. in 
 - `element_weights`	    The complex weight of each element. Must have the same size/shape as `r_xyz`.
 
