@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>1D Array · ArrayRadiation.jl</title><meta name="title" content="1D Array · ArrayRadiation.jl"/><meta property="og:title" content="1D Array · ArrayRadiation.jl"/><meta property="twitter:title" content="1D Array · ArrayRadiation.jl"/><meta name="description" content="Documentation for ArrayRadiation.jl."/><meta property="og:description" content="Documentation for ArrayRadiation.jl."/><meta property="twitter:description" content="Documentation for ArrayRadiation.jl."/><script data-outdated-warner src="../../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../assets/documenter.js"></script><script src="../../search_index.js"></script><script src="../../siteinfo.js"></script><script src="../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-mocha.css" data-theme-name="catppuccin-mocha"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-macchiato.css" data-theme-name="catppuccin-macchiato"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-frappe.css" data-theme-name="catppuccin-frappe"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-latte.css" data-theme-name="catppuccin-latte"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../../">ArrayRadiation.jl</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../../">ArrayRadiation.jl Documentation</a></li><li><span class="tocitem">Examples</span><ul><li class="is-active"><a class="tocitem" href>1D Array</a><ul class="internal"><li><a class="tocitem" href="#1D-Radiation-Pattern"><span>1D Radiation Pattern</span></a></li><li><a class="tocitem" href="#2D-Radiation-Pattern"><span>2D Radiation Pattern</span></a></li></ul></li><li><a class="tocitem" href="../element_radiation_pattern/">Default Element Radiation Pattern</a></li><li><a class="tocitem" href="../linear_array_polar_gain_pattern/">Linear Array Polar Gain Pattern</a></li><li><a class="tocitem" href="../window_function/">Window Function</a></li><li><a class="tocitem" href="../monopulse_pattern/">Monopulse Pattern</a></li><li><a class="tocitem" href="../beem_steering/">Beam Steering</a></li><li><a class="tocitem" href="../2D_array/">2D Array</a></li></ul></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Examples</a></li><li class="is-active"><a href>1D Array</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>1D Array</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/ErikBuer/ArrayRadiation.jl" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/ErikBuer/ArrayRadiation.jl/blob/main/docs/src/Examples/1D_array.md" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="1D-Array"><a class="docs-heading-anchor" href="#1D-Array">1D Array</a><a id="1D-Array-1"></a><a class="docs-heading-anchor-permalink" href="#1D-Array" title="Permalink"></a></h1><h2 id="1D-Radiation-Pattern"><a class="docs-heading-anchor" href="#1D-Radiation-Pattern">1D Radiation Pattern</a><a id="1D-Radiation-Pattern-1"></a><a class="docs-heading-anchor-permalink" href="#1D-Radiation-Pattern" title="Permalink"></a></h2><p>Lets create an array and look at its radiation pattern.</p><p>First we must place the antenna elements. Lets give them λ/2 spacing and spread them linearly.</p><pre><code class="language-julia hljs">using Plots;
+gr();
+using LaTeXStrings
+
+using ArrayRadiation
+
+element_separation_λ = 1/2;
+
+# Place elements symmetrically around zero
+element_count = 32;
+
+r = ArrayRadiation.linear_array(element_count, element_separation_λ)
+
+scatter(r, zeros(length(r)),
+    markershape=:circle,
+    # markercolor=:blue,
+    markersize=4,
+    xlabel=&quot;Position [λ]&quot;,
+    title=&quot;Element Positions&quot;,
+    legend=false,
+    #grid=false,
+    yticks= false,
+    ylims  = (-1, 1),
+)</code></pre><img src="b5804b56.svg" alt="Example block output"/><p>These elements now represent the antenna placements. We use the <code>cos_taper</code> function to approzimate the element gain.</p><pre><code class="language-julia hljs">angleRad = LinRange(π / 2, -π / 2, 501);
+angleDeg = rad2deg.(angleRad);
+
+element_gain_approximation = Kspace.cos_taper.(angleRad)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">501-element Vector{Float64}:
+ 2.0034255056301375e-23
+ 0.0008268901434036129
+ 0.00218211586735533
+ 0.003849333744150165
+ 0.005758001759428315
+ 0.007868823507305008
+ 0.010155926268089909
+ 0.012600652408144952
+ 0.015188739724236872
+ 0.017908831445312717
+ ⋮
+ 0.015188739724236872
+ 0.012600652408144952
+ 0.010155926268089909
+ 0.007868823507305008
+ 0.005758001759428315
+ 0.003849333744150165
+ 0.00218211586735533
+ 0.0008268901434036129
+ 2.0034255056301375e-23</code></pre><p>We can apply different weights to each element to create different beam directions.</p><p>But in this example we give all elements a uniform weight:</p><pre><code class="language-julia hljs"># Antenna element weight
+W = ones(element_count)
+
+scatter(r, W,
+    marker=:circle,
+    linecolor=:blue,
+    markersize=4,
+    xlabel=&quot;Element Position [λ]&quot;,
+    ylabel=&quot;Weight&quot;,
+    title=&quot;Antenna Element Weights&quot;,
+    legend=false,
+    grid=true,
+    ylims  = (0, 1.1),
+)</code></pre><img src="4e48c3b1.svg" alt="Example block output"/><p>With this defined, we can calculate the radiation pattern of the array.</p><p>The propagation direciton is decided by the vector <span>$\vec{k}$</span>, as opposed to elevation and azimuth angles (<span>$θ, ϕ$</span>).</p><p><span>$||\vec{k}|| = \frac{2π}{λ_0}$</span></p><pre><code class="language-julia hljs"># Calculate K-space vectors
+k_xyz = 2π*Kspace.elevation2k_hat.(angleRad)
+
+# Map K-space gain calculation function.
+GΩ(k) = Kspace.gain_1D(k, 1, r, W)
+GΩ_lin = broadcast(GΩ, k_xyz).*element_gain_approximation
+
+GΩ_dB = DspUtility.pow2db.(abs.(GΩ_lin))
+
+plot(angleDeg, GΩ_dB,
+    xlabel = &quot;Elevation [deg]&quot;,
+    ylabel = L&quot;G_Ω\; [dB]&quot;,
+    title  = &quot;Array gain&quot;,
+    ylims  = (-30, 18),
+    reuse  = true,
+    legend = false
+)</code></pre><img src="d8a0a04a.svg" alt="Example block output"/><p>We can now inspect the radiation pattern in one dimension. This is useful to get a sense of the performance.</p><p>However one is often interrested in the complete radiaiton pattern in all dimensions.</p><h2 id="2D-Radiation-Pattern"><a class="docs-heading-anchor" href="#2D-Radiation-Pattern">2D Radiation Pattern</a><a id="2D-Radiation-Pattern-1"></a><a class="docs-heading-anchor-permalink" href="#2D-Radiation-Pattern" title="Permalink"></a></h2><p>The default element radiation pattern <code>Kspace.cos_taper</code> only radiate forward, so a 2D plot shows all details of the current array.</p><p>For simplicity, we calculate the radiation pattern from <span>$k_x, k_y ∈ [-2\pi, 2\pi]$</span>.</p><p><span>$\vec{k} = k_x\hat{x} + k_y\hat{y} + k_z\hat{z}$</span></p><p>This yields invalid <span>$\vec{k}$</span> vectors with a magnitude greater than 2π (in our case) in the corners of the plot.</p><p>But as you can see in the resulting radiation pattern, due to our element gain pattern, the array gain is nothing here anyways.</p><pre><code class="language-julia hljs">resolution = 201
+
+# Create a 2D grid for x and y values
+x_vals = LinRange(-1, 1, resolution)
+y_vals = LinRange(-1, 1, resolution)
+
+# Initialize matrices to store the k-values
+k_z = zeros(resolution, resolution)
+GΩ_lin = zeros(resolution, resolution)
+
+for m in 1:resolution
+    for n in 1:resolution
+        k_z[m, n] = sqrt(max(0, 1 - x_vals[n]^2 - y_vals[m]^2))
+    end
+end
+
+heatmap(x_vals, y_vals, k_z,
+    xlabel=L&quot;\hat{k}_x&quot;,
+    ylabel=L&quot;\hat{k}_y&quot;,
+    title=&quot;Values of &quot;*L&quot;\hat{k}_z&quot;,
+    color=:jet1
+)</code></pre><img src="bccab1d6.svg" alt="Example block output"/><pre><code class="language-julia hljs">element_gain(elevation) = Kspace.cos_taper.(elevation, 1.4)
+
+# Calculate k_z values and gain values
+for m in 1:resolution
+    for n in 1:resolution
+        k_x = x_vals[n]
+        k_y = y_vals[m]
+        k_z = sqrt(max(0, 1 - k_x^2 - k_y^2))
+
+        # Create the k vector for each (k_x, k_y, k_z) triplet
+        k_xyz = 2π.*[k_x, k_y, k_z]
+
+        θ = Kspace.k2elevation(k_xyz)
+
+        # Calculate the gain using the provided Kspace.gain_1D function
+        GΩ_lin[m, n] = GΩ(k_xyz)*element_gain(θ)
+
+    end
+end
+
+# Convert the gain to dB
+GΩ_dB = DspUtility.pow2db.(abs.(GΩ_lin))
+
+GΩ_dB = clamp.(GΩ_dB, -40, Inf)
+
+# Plot the result as a heatmap
+heatmap(x_vals, y_vals, GΩ_dB,
+    xlabel=L&quot;\hat{k}_x&quot;,
+    ylabel=L&quot;\hat{k}_y&quot;,
+    title=L&quot;G_Ω(\vec{k})\; [dB]&quot;, color=:jet1
+)</code></pre><img src="36d69d73.svg" alt="Example block output"/></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../../">« ArrayRadiation.jl Documentation</a><a class="docs-footer-nextpage" href="../element_radiation_pattern/">Default Element Radiation Pattern »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.8.1 on <span class="colophon-date" title="Sunday 16 March 2025 14:38">Sunday 16 March 2025</span>. Using Julia version 1.11.4.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
