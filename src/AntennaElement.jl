@@ -31,10 +31,12 @@ Calculate approximate radiation pattern for a half wave dipole.
 
 """
 function half_wave_dipole(θ::AbstractFloat, ϕ::AbstractFloat=0.0)
+    θ = abs(θ)
+
     # Variables for empirical modeling.
     c1 = 0.7796
     c2 = 0.2192
-    return c1*sin(θ) + c2*sin(θ)^3
+    return 1.64 * (c1*sin(θ) + c2*sin(θ)^3)
 end
 
 """

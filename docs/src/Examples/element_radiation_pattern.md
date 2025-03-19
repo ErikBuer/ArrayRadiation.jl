@@ -71,7 +71,7 @@ fig
 using GLMakie
 using ArrayRadiation
 
-angleRad = LinRange(0, π, 161);
+angleRad = LinRange(-π, π, 181);
 
 Ge = AntennaElement.half_wave_dipole.(angleRad)
 Ge_dB = DspUtility.pow2db(Ge)
