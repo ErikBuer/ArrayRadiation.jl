@@ -1,6 +1,8 @@
 # ArrayRadiation
 
 [![](https://img.shields.io/badge/docs-latest-blue.svg)](https://erikbuer.github.io/ArrayRadiation.jl/dev/)
+[![](https://img.shields.io/badge/docs-stable-blue.svg)](https://erikbuer.github.io/ArrayRadiation.jl/stable/)
+
 
 ## Features
 
@@ -11,11 +13,8 @@
 
 ## Installation
 
-The package is currently not a registered package.
-Add it using ht following command.
-
 ```Julia
-] add git@github.com:ErikBuer/ArrayRadiation.jl.git
+] add ArrayRadiation
 ```
 
 ## Building docs locally
