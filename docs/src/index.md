@@ -6,3 +6,5 @@
 - Common element weight functions (windows)
 - Calculate gain pattern for arbitrary arrays
 - Support for regular and irregular arrays
+
+![Promo image](assets/promo_shot.png)

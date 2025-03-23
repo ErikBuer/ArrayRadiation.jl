@@ -27,4 +27,4 @@ Manifest.toml
 *.DS_Store
 
 # Folder with testplots.
-plots/
+/plots/
