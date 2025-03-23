@@ -11,13 +11,10 @@
 - Calculate gain pattern for arbitrary arrays
 - Support for regular and irregular arrays
 
+![Promo image](docs/src/assets/promo_shot.png)
+
 ## Installation
 
 ```Julia
 ] add ArrayRadiation
 ```
-
-## Building docs locally
-
-To speed up docs generation locally, there is a separate make_local.jl file.
-Run this file from the project root.
