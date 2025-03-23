@@ -108,7 +108,7 @@ julia> DspUtility.antenna_matrix(2, 1, 1/2)
 2×1 Matrix{Tuple{Float64, Float64, Float64}}:
  (0.0, -0.25, 0.0)
  (0.0, 0.25, 0.0)
-````
+```
 """
 function antenna_matrix(M, N, separation)
     x_positions = LinRange(-(N - 1) / 2 * separation, (N - 1) / 2 * separation, N)
