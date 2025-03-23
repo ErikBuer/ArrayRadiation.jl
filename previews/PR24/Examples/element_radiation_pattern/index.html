@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Element Radiation Pattern · ArrayRadiation.jl</title><meta name="title" content="Element Radiation Pattern · ArrayRadiation.jl"/><meta property="og:title" content="Element Radiation Pattern · ArrayRadiation.jl"/><meta property="twitter:title" content="Element Radiation Pattern · ArrayRadiation.jl"/><meta name="description" content="Documentation for ArrayRadiation.jl."/><meta property="og:description" content="Documentation for ArrayRadiation.jl."/><meta property="twitter:description" content="Documentation for ArrayRadiation.jl."/><script data-outdated-warner src="../../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../assets/documenter.js"></script><script src="../../search_index.js"></script><script src="../../siteinfo.js"></script><script src="../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-mocha.css" data-theme-name="catppuccin-mocha"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-macchiato.css" data-theme-name="catppuccin-macchiato"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-frappe.css" data-theme-name="catppuccin-frappe"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/catppuccin-latte.css" data-theme-name="catppuccin-latte"/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../../">ArrayRadiation.jl</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../../">ArrayRadiation.jl</a></li><li><a class="tocitem" href="../../api_reference/">API Reference</a></li><li><span class="tocitem">Examples</span><ul><li class="is-active"><a class="tocitem" href>Element Radiation Pattern</a><ul class="internal"><li><a class="tocitem" href="#Cosine-Taper"><span>Cosine Taper</span></a></li><li><a class="tocitem" href="#Half-Wave-Dipole"><span>Half-Wave Dipole</span></a></li><li><a class="tocitem" href="#Cardioid"><span>Cardioid</span></a></li><li><a class="tocitem" href="#Microstrip-Patch"><span>Microstrip Patch</span></a></li><li><a class="tocitem" href="#Yagi-Uda"><span>Yagi Uda</span></a></li></ul></li><li><a class="tocitem" href="../1D_array/">1D Array</a></li><li><a class="tocitem" href="../2D_array/">2D Array</a></li><li><a class="tocitem" href="../2D_array_3D_plot/">2D Array 3D Plot</a></li><li><a class="tocitem" href="../linear_array_polar_gain_pattern/">Linear Array Polar Gain Pattern</a></li><li><a class="tocitem" href="../window_function/">Window Function</a></li><li><a class="tocitem" href="../monopulse_pattern/">Monopulse Pattern</a></li><li><a class="tocitem" href="../beem_steering/">Beam Steering</a></li></ul></li><li><a class="tocitem" href="../../coordinate_system/">Coordinate System</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Examples</a></li><li class="is-active"><a href>Element Radiation Pattern</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Element Radiation Pattern</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/ErikBuer/ArrayRadiation.jl" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/ErikBuer/ArrayRadiation.jl/blob/main/docs/src/Examples/element_radiation_pattern.md" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="Element-Radiation-Pattern"><a class="docs-heading-anchor" href="#Element-Radiation-Pattern">Element Radiation Pattern</a><a id="Element-Radiation-Pattern-1"></a><a class="docs-heading-anchor-permalink" href="#Element-Radiation-Pattern" title="Permalink"></a></h1><p>The package is bundled with the radiation pattern of some typical antennas.</p><h2 id="Cosine-Taper"><a class="docs-heading-anchor" href="#Cosine-Taper">Cosine Taper</a><a id="Cosine-Taper-1"></a><a class="docs-heading-anchor-permalink" href="#Cosine-Taper" title="Permalink"></a></h2><pre><code class="language-julia hljs">using GLMakie
+using ArrayRadiation
+
+angleRad = LinRange(π / 2, -π / 2, 81);
+
+Ge = AntennaElement.cos_taper.(angleRad)
+Ge_dB = DspUtility.pow2db(Ge)
+
+y_lower_limit = -30 # dB
+Ge_dB = clamp.(Ge_dB, y_lower_limit, Inf)
+
+# Create figure and polar axis
+f = Figure()
+ax = PolarAxis(f[1, 1],
+    title = &quot;Cosine Taper&quot;,
+    thetalimits = (-pi/2, pi/2),
+    radius_at_origin = -30,
+    theta_0 = -pi/2,
+    direction = -1,
+)
+lines!(ax, angleRad, Ge_dB, color = :blue, linewidth = 2)
+f</code></pre><img src="f1176f6c.png" alt="Example block output"/><pre><code class="language-julia hljs">using GLMakie
+using ArrayRadiation
+
+
+# Coordinate space to be modeled
+φs = range(0, 2π, length=361)   # angle within xy-plane relative to +x
+θs = range(0, π, length=181)    # angle relative to +z
+angles = [(φ,θ) for φ in φs, θ in θs]
+
+# Our antennas gain as a function of elevation and azimuth angle.
+Ge(θ,φ) = AntennaElement.cos_taper(θ)
+
+# Get radius (the Element Gain) at each angle
+rs = [Ge(θ, φ) for (φ,θ) in angles]
+
+# Convert this data to a 2D mesh
+spherical_mesh = [(r,φ,θ) for (r,(φ,θ)) in zip(rs,angles)]
+
+# Convert spherical coordinates to rectangular coordinates
+xs = [r*sin(θ)*cos(φ) for (r,φ,θ) in spherical_mesh]
+ys = [r*sin(θ)*sin(φ) for (r,φ,θ) in spherical_mesh]
+zs = [r*cos(θ)        for (r,φ,θ) in spherical_mesh]
+
+
+# Plot
+fig = Figure()
+ax = Axis3(fig[1,1])
+plt = surface!(ax, xs, ys, zs,
+    color=rs,
+    colormap=:jet1
+)
+Colorbar(fig[1,2], plt, label=&quot;Gain&quot;)
+fig</code></pre><img src="3bcb5d5a.png" alt="Example block output"/><h2 id="Half-Wave-Dipole"><a class="docs-heading-anchor" href="#Half-Wave-Dipole">Half-Wave Dipole</a><a id="Half-Wave-Dipole-1"></a><a class="docs-heading-anchor-permalink" href="#Half-Wave-Dipole" title="Permalink"></a></h2><pre><code class="language-julia hljs">using GLMakie
+using ArrayRadiation
+
+angleRad = LinRange(-π, π, 181);
+
+Ge = AntennaElement.half_wave_dipole.(angleRad)
+Ge_dB = DspUtility.pow2db(Ge)
+
+y_lower_limit = -30 # dB
+Ge_dB = clamp.(Ge_dB, y_lower_limit, Inf)
+
+# Create figure and polar axis
+f = Figure()
+ax = PolarAxis(f[1, 1],
+    title = &quot;Half-Wave Dipole&quot;,
+    #thetalimits = (-pi/2, pi/2),
+    radius_at_origin = -30,
+    theta_0 = -pi/2,
+    direction = -1,
+)
+lines!(ax, angleRad, Ge_dB, color = :blue, linewidth = 2)
+f</code></pre><img src="01d85151.png" alt="Example block output"/><h2 id="Cardioid"><a class="docs-heading-anchor" href="#Cardioid">Cardioid</a><a id="Cardioid-1"></a><a class="docs-heading-anchor-permalink" href="#Cardioid" title="Permalink"></a></h2><pre><code class="language-julia hljs">using GLMakie
+using ArrayRadiation
+
+angleRad = LinRange(-π, π, 161);
+
+Ge = AntennaElement.cardioid.(angleRad)
+Ge_dB = DspUtility.pow2db(Ge)
+
+y_lower_limit = -30 # dB
+Ge_dB = clamp.(Ge_dB, y_lower_limit, Inf)
+
+# Create figure and polar axis
+f = Figure()
+ax = PolarAxis(f[1, 1],
+    title = &quot;Cardioid&quot;,
+    #thetalimits = (-pi/2, pi/2),
+    radius_at_origin = -30,
+    theta_0 = -pi/2,
+    direction = -1,
+)
+lines!(ax, angleRad, Ge_dB, color = :blue, linewidth = 2)
+f</code></pre><img src="7ee6c18e.png" alt="Example block output"/><h2 id="Microstrip-Patch"><a class="docs-heading-anchor" href="#Microstrip-Patch">Microstrip Patch</a><a id="Microstrip-Patch-1"></a><a class="docs-heading-anchor-permalink" href="#Microstrip-Patch" title="Permalink"></a></h2><pre><code class="language-julia hljs">using GLMakie
+using ArrayRadiation
+
+angleRad = LinRange(π / 2, -π / 2, 81);
+
+Ge = AntennaElement.microstrip_patch.(angleRad)
+Ge_dB = DspUtility.pow2db(Ge)
+
+y_lower_limit = -30 # dB
+Ge_dB = clamp.(Ge_dB, y_lower_limit, Inf)
+
+# Create figure and polar axis
+f = Figure()
+ax = PolarAxis(f[1, 1],
+    title = &quot;Microstrip Patch&quot;,
+    thetalimits = (-pi/2, pi/2),
+    radius_at_origin = -30,
+    theta_0 = -pi/2,
+    direction = -1,
+)
+lines!(ax, angleRad, Ge_dB, color = :blue, linewidth = 2)
+f</code></pre><img src="eca41980.png" alt="Example block output"/><h2 id="Yagi-Uda"><a class="docs-heading-anchor" href="#Yagi-Uda">Yagi Uda</a><a id="Yagi-Uda-1"></a><a class="docs-heading-anchor-permalink" href="#Yagi-Uda" title="Permalink"></a></h2><pre><code class="language-julia hljs">using GLMakie
+using ArrayRadiation
+
+angleRad = LinRange(0, π, 81);
+
+Ge = AntennaElement.yagi_uda.(angleRad)
+Ge_dB = DspUtility.pow2db(Ge)
+
+y_lower_limit = -30 # dB
+Ge_dB = clamp.(Ge_dB, y_lower_limit, Inf)
+
+# Create figure and polar axis
+f = Figure()
+ax = PolarAxis(f[1, 1],
+    title = &quot;Yagi Uda&quot;,
+    thetalimits = (-0, pi),
+    radius_at_origin = -30,
+    theta_0 = -pi/2,
+    direction = -1,
+)
+lines!(ax, angleRad, Ge_dB, color = :blue, linewidth = 2)
+f</code></pre><img src="c7450022.png" alt="Example block output"/></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../../api_reference/">« API Reference</a><a class="docs-footer-nextpage" href="../1D_array/">1D Array »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="catppuccin-latte">catppuccin-latte</option><option value="catppuccin-frappe">catppuccin-frappe</option><option value="catppuccin-macchiato">catppuccin-macchiato</option><option value="catppuccin-mocha">catppuccin-mocha</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.9.0 on <span class="colophon-date" title="Sunday 23 March 2025 15:25">Sunday 23 March 2025</span>. Using Julia version 1.11.4.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
