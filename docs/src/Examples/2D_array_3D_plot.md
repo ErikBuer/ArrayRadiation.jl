@@ -46,8 +46,8 @@ max_range = 1 + maximum(abs, vcat(xs, ys, zs))  # Find max value across all coor
 
 ```
 
-In order to plot the radiation pattern in 3D and dB, we need to clip the lowest values, and bias the gain so it is purely positive.
-This makes the axis in the plot biased, but the relative scaling remain intact.
+In order to plot the radiation pattern in 3D and dB, we need to clip the lowest values and bias the gain so it is purely positive.
+This makes the axis in the plot biased, but the relative scaling remains intact.
 
 ``` @example 3dPlot
 # Plot the 3D gain pattern
@@ -59,7 +59,7 @@ plt = surface!(ax, xs, ys, zs, color=rs_dB, colormap=:jet1)
 fig
 ```
 
-To give some sense of the radiation pattern in relation to the array, lets draw a generic patch antenna array.
+To give some sense of the radiation pattern in relation to the array, let's draw a generic patch antenna array.
 
 ``` @example 3dPlot
 

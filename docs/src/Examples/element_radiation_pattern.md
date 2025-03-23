@@ -1,6 +1,6 @@
 # Element Radiation Pattern
 
-The package is bundeled with the radiation pattern of some typical antennas.
+The package is bundled with the radiation pattern of some typical antennas.
 
 ## Cosine Taper
 
