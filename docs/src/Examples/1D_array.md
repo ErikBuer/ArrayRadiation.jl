@@ -2,9 +2,9 @@
 
 ## 1D Radiation Pattern
 
-Lets create an array and look at its radiation pattern.
+Let's create an array and look at its radiation pattern.
 
-First we must place the antenna elements. Lets give them λ/2 spacing and spread them linearly.
+First, we must place the antenna elements. Let's give them λ/2 spacing and spread them linearly.
 
 ``` @example StaticArray
 using Plots;
@@ -34,7 +34,7 @@ scatter(r, zeros(length(r)),
 ```
 
 These elements now represent the antenna placements.
-We use the `cos_taper` function to approzimate the element gain.
+We use the `cos_taper` function to approximate the element gain.
 
 ``` @example StaticArray
 angleRad = LinRange(π / 2, -π / 2, 501);
@@ -45,7 +45,7 @@ element_gain_approximation = AntennaElement.cos_taper.(angleRad)
 
 We can apply different weights to each element to create different beam directions.
 
-But in this example we give all elements a uniform weight:
+But in this example, we give all elements a uniform weight:
 
 ``` @example StaticArray
 # Antenna element weight
@@ -93,11 +93,11 @@ plot(angleDeg, GΩ_dB,
 
 We can now inspect the radiation pattern in one dimension. This is useful to get a sense of the performance.
 
-However one is often interrested in the complete radiaiton pattern in all dimensions.
+However, one is often interested in the complete radiation pattern in all dimensions.
 
 ## 2D Radiation Pattern
 
-The element radiation pattern `cos_taper` only radiate forward, so a 2D plot shows all details of the current array.
+The element radiation pattern `cos_taper` only radiates forward, so a 2D plot shows all the details of the current array.
 
 For simplicity, we calculate the radiation pattern from ``k_x, k_y ∈ [-2\pi, 2\pi]``.
 
@@ -105,7 +105,7 @@ For simplicity, we calculate the radiation pattern from ``k_x, k_y ∈ [-2\pi, 2
 
 This yields invalid ``\vec{k}`` vectors with a magnitude greater than 2π (in our case) in the corners of the plot.
 
-But as you can see in the resulting radiation pattern, due to our element gain pattern, the array gain is nothing here anyways.
+But as you can see in the resulting radiation pattern, due to our element gain pattern, the array gain is nothing here anyway.
 
 ``` @example StaticArray
 resolution = 201

@@ -119,7 +119,7 @@ function microstrip_patch(θ::AbstractFloat, ϕ::AbstractFloat=0.0)
 
     # Variables for empirical modeling.
     c1=  0.9731
-    c2= −0.8119
+    c2= -0.8119
     c3=  5.7330
     return c1 + c2*sin(θ)^4 + c3*cos(θ)^4
 end

@@ -29,6 +29,7 @@ makedocs(
             "Examples/element_radiation_pattern.md",
             "Examples/1D_array.md",
             "Examples/2D_array.md",
+            "Examples/2D_array_3D_plot.md",
             "Examples/linear_array_polar_gain_pattern.md",
             "Examples/window_function.md",
             "Examples/monopulse_pattern.md",

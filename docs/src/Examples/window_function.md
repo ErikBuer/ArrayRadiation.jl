@@ -12,9 +12,9 @@ r = ArrayRadiation.linear_array(element_count, element_separation_λ)
 ```
 
 These elements now represent antennas. For the time being, these will be isotropic radiators.
-We can apply different weights to each element so lets look at how this will affect our array.
+We can apply different weights to each element so let's look at how this will affect our array.
 
-Lets compare a linear weight to a commonly used Taylor weighting scheme.
+Let's compare a linear weight to a commonly used Taylor weighting scheme.
 
 ``` @example WindowWeights
 # Antenna element weight
@@ -78,7 +78,7 @@ plot!(angleDeg, GΩ2_dB,
 )
 ```
 
-It is apparent that the Taylor weighted antenna has greater peak to sidelobe distance, comming with the penalty of a wider main beam.
+It is apparent that the Taylor weighted antenna has a greater peak-to-sidelobe distance, comming with the penalty of a wider main beam.
 
 ## Window Comparisons
 

@@ -3,11 +3,11 @@ module Kspace
 using LinearAlgebra
 
 """
-	k_xyz(θ::Real, ϕ::Real, λ0::Real)::Vector
+	k_xyz(θ::Real, ϕ::Real, λ0::Real=1)::Vector
 
 Calculate k-space vector, representing antenna elevation and coordinates.
 """
-k_xyz(θ::Real, ϕ::Real, λ0::Real)::Vector = 2*π/λ0 * [sin(θ)*cos(ϕ), sin(θ)*sin(ϕ), cos(θ)]
+k_xyz(θ::Real, ϕ::Real, λ0::Real=1)::Vector = 2*π/λ0 * [sin(θ)*cos(ϕ), sin(θ)*sin(ϕ), cos(θ)]
 
 """
     k2elevation(k_xyz::Vector)::Real
@@ -73,7 +73,7 @@ cos_taper_k_hat(k_hat_x::Real, k_hat_y::Real, α = 1.4) = (1-(k_hat_x[1]^2+k_hat
     maximum_element_separation(max_look_angle_deg)
 
 Calculate the maximum array element separation for maximum look angle.
-    
+
 Result is fraction of wavelenth.
 """
 function maximum_element_separation(max_look_angle_deg)

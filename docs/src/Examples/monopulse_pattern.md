@@ -39,7 +39,7 @@ sum(W)
 sum(W2)
 ```
 
-Now lets compare their radiation pattern.
+Now let's compare their radiation pattern.
 
 ``` @example WindowWeights
 
