@@ -1,4 +1,4 @@
-# ArrayRadiation
+# ArrayRadiation.jl
 
 [![](https://img.shields.io/badge/docs-latest-blue.svg)](https://erikbuer.github.io/ArrayRadiation.jl/dev/)
 [![](https://img.shields.io/badge/docs-stable-blue.svg)](https://erikbuer.github.io/ArrayRadiation.jl/stable/)
