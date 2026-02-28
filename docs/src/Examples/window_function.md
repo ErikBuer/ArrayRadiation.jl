@@ -130,3 +130,50 @@ plot!(angleDeg, GΩ4_dB,
     label  = "Hanning weighted"
 )
 ```
+
+## Excitation Power and Resulting Gain Curves
+
+When comparing different array sizes and weight distribution, it's important that the excitation is accounted for.
+The `Kspace.gain` methods scale the resulting gain pattern to ensure the output gain is in `dBi`.
+
+The example below shows that even when exciting the array with different power levels, the `gain_1D` function still return the correct gain.
+
+``` @example WindowWeights
+# Weight function with increased excitation.
+W5 = Window.cosine_q(element_count, 2)*2.0
+
+scatter(r, W4, 
+    marker=:circle, 
+    linecolor=:blue, 
+    markersize=4, 
+    xlabel="Element Position [λ]", 
+    ylabel="Weight", 
+    title="Antenna Element Weights", 
+    legend=true,
+    grid=true,
+    label  = "Hanning",
+)
+scatter!(r, W5, label  = "Scaled Hanning")
+```
+
+``` @example WindowWeights
+GΩ5_lin = map(k -> GΩ(k, W5), k_xyz).*element_gain_approximation
+GΩ5_dB = DspUtility.pow2db.(abs.(GΩ5_lin))
+
+plot(angleDeg, GΩ4_dB,
+    xlabel = "Angle [deg]",
+    ylabel = "GΩ [dB]",
+    title  = "Array gain",
+    xlims  = (-25, 25),
+    ylims  = (-50, 20),
+    reuse  = true,
+    label  = "Hanning",
+    linewidth=3
+)
+
+plot!(angleDeg, GΩ5_dB, 
+    ls=:dash,
+    label  = "Scaled Hanning",
+    linewidth=3
+)
+```
