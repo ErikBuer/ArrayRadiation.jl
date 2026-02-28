@@ -1,6 +1,8 @@
 module DspUtility
 
-export linear_array, antenna_matrix
+using LinearAlgebra
+
+export linear_array, antenna_matrix, phase_weight
 
 
 """
@@ -17,56 +19,56 @@ julia> ArrayRadiation.DspUtility._mean(a)
 2.5
 ```
 """
-_mean(x)::Real = sum(x)/length(x)
+_mean(x)::Real = sum(x) / length(x)
 
 
 """
 Convert between linear scale (magnitude) and decibel 
 """
 function mag2db(magnitude)
-	return 20 * log10.(magnitude)
+    return 20 * log10.(magnitude)
 end
 
 """
 Convert between decibal scale (magnitude) and linear
 """
 function db2mag(mag_dB)
-	return 10^(mag_dB ./ 20)
+    return 10^(mag_dB ./ 20)
 end
 
 """
 Convert between linear scale (magnitude) and decibel 
 """
 function pow2db(power)
-	return 10 * log10.(power)
+    return 10 * log10.(power)
 end
 
 """
 Convert between decibal scale (power) and linear
 """
 function db2pow(power_dB)
-	return 10^(power_dB ./ 10)
+    return 10^(power_dB ./ 10)
 end
 
 """
 Return the average signal power in dBW
 """
 function power_dBW(signal)
-	return pow2db(_mean(abs(signal) .^ 2))
+    return pow2db(_mean(abs(signal) .^ 2))
 end
 
 """
 Return the average signal power in dBm
 """
 function power_dBm(signal)
-	return power_dBW(signal) + 30
+    return power_dBW(signal) + 30
 end
 
 """
 Return the signal energy in Joule
 """
 function energy(signal)
-	return sum(abs(signal) .^ 2)
+    return sum(abs(signal) .^ 2)
 end
 
 """
@@ -76,7 +78,7 @@ Generate locations (1D) for a evenly spaced array of N elements. N is even.
 - `N`          	Number of elements (assumed to be even).
 - `separation` 	Distance between adjacent elements.
 """
-linear_array(N, separation) = LinRange(- (N - 1) / 2 * separation, (N - 1) / 2 * separation, N)
+linear_array(N, separation) = LinRange(-(N - 1) / 2 * separation, (N - 1) / 2 * separation, N)
 
 """
     antenna_matrix(M, N, separation)
@@ -150,5 +152,32 @@ function discard_low_values(scalar_value::Real, lower_limit::Real)
     end
 end
 
+"""
+    phase_weight(elevation::Real, azimuth::Real, element_position::AbstractVector{<:Real})
+
+Calculate the phase weight (in radians) for beam steering toward a given direction.
+
+The phase weight is 2π times the distance (in wavelengths) from the element position 
+to a plane through the origin normal to the scan direction.
+
+# Arguments
+
+- `elevation::Real` - Elevation angle θ [rad] of scan direction
+- `azimuth::Real` - Azimuth angle φ [rad] of scan direction  
+- `element_position_xyz::AbstractVector{<:Real}` - Element position [x, y, z] in wavelengths
+
+# Returns
+
+- Phase weight in radians
+"""
+function phase_weight(elevation::Real, azimuth::Real, element_position_xyz::AbstractVector{<:Real})::Real
+    # Get unit vector in scan direction (normalized k-space vector)
+    k_hat = [sin(elevation) * cos(azimuth), sin(elevation) * sin(azimuth), cos(elevation)]
+
+    # Distance from element to plane is the dot product with the normal
+    # Phase = 2π × distance (where distance is in wavelengths)
+    # Negative sign because we want the phase to advance for elements ahead of the plane
+    return -2π * dot(k_hat, element_position_xyz)
+end
 
 end
