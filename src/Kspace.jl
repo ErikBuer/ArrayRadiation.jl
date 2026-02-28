@@ -82,7 +82,7 @@ end
 
 
 """
-	gain_1D(k_xyz::AbstractVector{<:Real}, Ge::Real, r_x::AbstractVector, element_weights::AbstractVector)
+	gain_1D(k_xyz::AbstractVector{<:Real}, Ge::Real, r_x::AbstractVector, element_weights::AbstractVector)::Real
 
 Calculate GΩ(k), the angular domain gain in direction k for an array with specified element weights.
 
@@ -97,7 +97,7 @@ Calculate GΩ(k), the angular domain gain in direction k for an array with speci
 
 - R. A. Dana, Electronically Scanned Arrays and K-Space Gain Formulation, Springer, 2019.
 """
-function gain_1D(k_xyz::AbstractVector{<:Real}, Ge::Real, r_x::AbstractVector, element_weights::AbstractVector)
+function gain_1D(k_xyz::AbstractVector{<:Real}, Ge::Real, r_x::AbstractVector, element_weights::AbstractVector)::Real
     if length(r_x) != length(element_weights)
         throw(ArgumentError("element_weights must have the same length as r_x. Got length $(length(element_weights)) for element_weights and length $(length(r_x)) for r_x."))
     end
@@ -132,7 +132,7 @@ Calculate GΩ(k), the angular domain gain in direction k for an array with speci
 
 - R. A. Dana, Electronically Scanned Arrays and K-Space Gain Formulation, Springer, 2019.
 """
-function gain(k_xyz::AbstractVector{<:Real}, Ge::Real, r_xyz::AbstractArray, element_weights::AbstractArray)
+function gain(k_xyz::AbstractVector{<:Real}, Ge::Real, r_xyz::AbstractArray, element_weights::AbstractArray)::Real
     if size(r_xyz) != size(element_weights)
         throw(ArgumentError("element_weights must have the same size/shape as r_xyz. Got size $(size(element_weights)) for element_weights and size $(size(r_xyz)) for r_xyz."))
     end
@@ -149,6 +149,53 @@ function gain(k_xyz::AbstractVector{<:Real}, Ge::Real, r_xyz::AbstractArray, ele
     numerator(m) = W[m] * exp(-im * dot(k_xyz - k0, _r_xyz[m]))
     vecIndex = collect(Integer, 1:M)
     return Ge * abs.(Σ(numerator, vecIndex))^2 / Σ(abs.(W) .^ 2)
+end
+
+"""
+	gain(k_xyz::AbstractVector{<:Real}, Ge::Real, r_xyz::AbstractArray, element_weights::AbstractArray)
+
+Calculate GΩ(k), the angular domain gain in direction k for an array with specified element weights.
+
+# Arguments
+
+- `k_xyz`               k-space vector.
+- `Ge(k_xyz, element_index)`   A function returning the antenna gain of each element in direction `k_xyz`. `Ge(k_xyz, element_index)` should return a `Real` scalar value.
+- `r_xyz`               The placement of each antenna element in cartesian coordinates.
+- `element_weights`     The complex weight of each element. Must have the same size/shape as `r_xyz`.
+
+## References
+
+- R. A. Dana, Electronically Scanned Arrays and K-Space Gain Formulation, Springer, 2019.
+"""
+function gain(k_xyz::AbstractVector{<:Real}, Ge::Function, r_xyz::AbstractArray, element_weights::AbstractArray)::Real
+    if size(r_xyz) != size(element_weights)
+        throw(ArgumentError("element_weights must have the same size/shape as r_xyz. Got size $(size(element_weights)) for element_weights and size $(size(r_xyz)) for r_xyz."))
+    end
+
+    # Create _Ge_matrix with same shape as r_xyz
+    # Infer the type from a test call
+    test_idx = first(eachindex(r_xyz))
+    T = typeof(Ge(k_xyz, test_idx))
+    _Ge_matrix = Array{T}(undef, size(r_xyz))
+
+    # Calculate gain for each element
+    for i in eachindex(r_xyz)
+        _Ge_matrix[i] = Ge(k_xyz, i)
+    end
+
+    _Ge = reshape(_Ge_matrix, :)
+    _r_xyz = reshape(r_xyz, :)
+    W = reshape(element_weights, :)
+
+    M = length(_r_xyz)
+
+    # Array normal vector
+    k0 = [0.0, 0.0, 2π]
+
+    Σ = sum
+    numerator(m) = sqrt(_Ge[m]) * W[m] * exp(-im * dot(k_xyz - k0, _r_xyz[m]))
+    vecIndex = collect(Integer, 1:M)
+    return abs.(Σ(numerator, vecIndex))^2 / Σ(abs.(W) .^ 2)
 end
 
 end

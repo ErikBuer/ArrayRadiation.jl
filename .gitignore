@@ -28,3 +28,4 @@ Manifest.toml
 
 # Folder with testplots.
 /plots/
+/test/output/*
