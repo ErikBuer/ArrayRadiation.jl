@@ -1,4 +1,4 @@
-push!(LOAD_PATH,"../src/")
+push!(LOAD_PATH, "../src/")
 
 using Documenter
 
@@ -19,29 +19,28 @@ DocMeta.setdocmeta!(ArrayRadiation, :DocTestSetup, :(using ArrayRadiation); recu
 
 
 makedocs(
-    modules = [ArrayRadiation],
-    format = Documenter.HTML(),
-    sitename = "ArrayRadiation.jl",
-    pages = Any[
+    modules=[ArrayRadiation],
+    format=Documenter.HTML(),
+    sitename="ArrayRadiation.jl",
+    pages=Any[
         "index.md",
         "api_reference.md",
-        "Examples"  => Any[
+        "Examples"=>Any[
             "Examples/element_radiation_pattern.md",
             "Examples/1D_array.md",
             "Examples/2D_array.md",
             "Examples/2D_array_3D_plot.md",
+            "Examples/irregular_array.md",
             "Examples/linear_array_polar_gain_pattern.md",
             "Examples/window_function.md",
             "Examples/monopulse_pattern.md",
-            "Examples/beem_steering.md",
-            
-        ],
+            "Examples/beam_steering.md",],
         "coordinate_system.md",
     ],
-    doctest  = true,
+    doctest=true,
 )
 
 deploydocs(
-    repo = "github.com/ErikBuer/ArrayRadiation.jl.git",
-    push_preview = true,
+    repo="github.com/ErikBuer/ArrayRadiation.jl.git",
+    push_preview=true,
 )
