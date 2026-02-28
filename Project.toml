@@ -1,7 +1,7 @@
 name = "ArrayRadiation"
 uuid = "bd679b92-6dae-455f-83b3-ba41583ebc1e"
 authors = ["Erik Buer <buer94@gmail.com>"]
-version = "0.1.1"
+version = "0.1.2"
 
 [deps]
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
