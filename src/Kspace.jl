@@ -7,7 +7,7 @@ using LinearAlgebra
 
 Calculate k-space vector, representing antenna elevation and coordinates.
 """
-k_xyz(θ::Real, ϕ::Real, λ0::Real=1)::Vector = 2*π/λ0 * [sin(θ)*cos(ϕ), sin(θ)*sin(ϕ), cos(θ)]
+k_xyz(θ::Real, ϕ::Real, λ0::Real=1)::Vector = 2 * π / λ0 * [sin(θ) * cos(ϕ), sin(θ) * sin(ϕ), cos(θ)]
 
 """
     k2elevation(k_xyz::Vector)::Real
@@ -17,8 +17,8 @@ Calculate the elevation angle θ from a k-space vector.
 The elevation angle is the angle between the z unit vector and the the k vector.
 """
 function k2elevation(k_xyz::Vector)::Real
-	kx, ky, kz = k_xyz
-	return π/2-atan(kz, sqrt(kx^2 + ky^2))  # Elevation angle in radians.
+    kx, ky, kz = k_xyz
+    return π / 2 - atan(kz, sqrt(kx^2 + ky^2))  # Elevation angle in radians.
 end
 
 """
@@ -66,7 +66,7 @@ Optionally provide α. α=1.4 accounts for mutual coupling between elements.
 
 - R. A. Dana, Electronically Scanned Arrays and K-Space Gain Formulation, Springer, 2019.
 """
-cos_taper_k_hat(k_hat_x::Real, k_hat_y::Real, α = 1.4) = (1-(k_hat_x[1]^2+k_hat_y[1]^2))^(α/2)
+cos_taper_k_hat(k_hat_x::Real, k_hat_y::Real, α=1.4) = (1 - (k_hat_x[1]^2 + k_hat_y[1]^2))^(α / 2)
 
 
 """
@@ -77,7 +77,7 @@ Calculate the maximum array element separation for maximum look angle.
 Result is fraction of wavelenth.
 """
 function maximum_element_separation(max_look_angle_deg)
-	return 1 / (1 + sin(deg2rad(max_look_angle_deg)))
+    return 1 / (1 + sin(deg2rad(max_look_angle_deg)))
 end
 
 
@@ -89,7 +89,7 @@ Calculate GΩ(k), the angular domain gain in direction k for an array with speci
 # Arguments
 
 - `k_xyz`			    k-space vector.
-- `Ge`					The antena gain in direction `k_xyz`.
+- `Ge`		            The antenna gain in direction `k_xyz`.
 - `r_x` 				The placement of each antenna element. All elements are placed along the x-axis.
 - `element_weights`	    The complex weight of each element.
 
@@ -98,18 +98,22 @@ Calculate GΩ(k), the angular domain gain in direction k for an array with speci
 - R. A. Dana, Electronically Scanned Arrays and K-Space Gain Formulation, Springer, 2019.
 """
 function gain_1D(k_xyz::AbstractVector{<:Real}, Ge::Real, r_x::AbstractVector, element_weights::AbstractVector)
+    if length(r_x) != length(element_weights)
+        throw(ArgumentError("element_weights must have the same length as r_x. Got length $(length(element_weights)) for element_weights and length $(length(r_x)) for r_x."))
+    end
+
     M = length(r_x)
-	r_xyz = [[r_i, 0, 0] for r_i in r_x]
-	
-	W = element_weights
+    r_xyz = [[r_i, 0, 0] for r_i in r_x]
 
-	# Array normal vector
-	k0 = [ 0.0, 0.0, 2π ]
+    W = element_weights
 
-	Σ = sum
-	numerator(m) = W[m] * exp(-im * dot(k_xyz - k0, r_xyz[m]))
-	vecIndex = collect(Integer, 1:M)
-	return Ge * abs.(Σ(numerator, vecIndex))^2 / Σ(abs.(W) .^ 2)
+    # Array normal vector
+    k0 = [0.0, 0.0, 2π]
+
+    Σ = sum
+    numerator(m) = W[m] * exp(-im * dot(k_xyz - k0, r_xyz[m]))
+    vecIndex = collect(Integer, 1:M)
+    return Ge * abs.(Σ(numerator, vecIndex))^2 / Σ(abs.(W) .^ 2)
 end
 
 """
@@ -120,8 +124,8 @@ Calculate GΩ(k), the angular domain gain in direction k for an array with speci
 # Arguments
 
 - `k_xyz`			    k-space vector.
-- `Ge`					The antena gain in direction `k_xyz`.
-- `r_xyz` 				The placement of each antenna element. in 
+- `Ge`		            The antenna gain in direction `k_xyz`.
+- `r_xyz` 				The placement of each antenna element in cartesian coordinates.
 - `element_weights`	    The complex weight of each element. Must have the same size/shape as `r_xyz`.
 
 ## References
@@ -130,8 +134,7 @@ Calculate GΩ(k), the angular domain gain in direction k for an array with speci
 """
 function gain(k_xyz::AbstractVector{<:Real}, Ge::Real, r_xyz::AbstractArray, element_weights::AbstractArray)
     if size(r_xyz) != size(element_weights)
-        @error "element_weights must have the same size/shape as r_xyz."
-        return nothing
+        throw(ArgumentError("element_weights must have the same size/shape as r_xyz. Got size $(size(element_weights)) for element_weights and size $(size(r_xyz)) for r_xyz."))
     end
 
     _r_xyz = reshape(r_xyz, :)
@@ -139,13 +142,13 @@ function gain(k_xyz::AbstractVector{<:Real}, Ge::Real, r_xyz::AbstractArray, ele
 
     M = length(_r_xyz)
 
-	# Array normal vector
-	k0 = [ 0.0, 0.0, 2π ]
+    # Array normal vector
+    k0 = [0.0, 0.0, 2π]
 
-	Σ = sum
-	numerator(m) = W[m] * exp(-im * dot(k_xyz - k0, _r_xyz[m]))
-	vecIndex = collect(Integer, 1:M)
-	return Ge * abs.(Σ(numerator, vecIndex))^2 / Σ(abs.(W) .^ 2)
+    Σ = sum
+    numerator(m) = W[m] * exp(-im * dot(k_xyz - k0, _r_xyz[m]))
+    vecIndex = collect(Integer, 1:M)
+    return Ge * abs.(Σ(numerator, vecIndex))^2 / Σ(abs.(W) .^ 2)
 end
 
 end
