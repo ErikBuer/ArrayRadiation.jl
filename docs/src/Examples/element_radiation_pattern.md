@@ -152,7 +152,7 @@ f
 using GLMakie
 using ArrayRadiation
 
-angleRad = LinRange(0, π, 81);
+angleRad = LinRange(-π/2, π/2, 81);
 
 Ge = AntennaElement.yagi_uda.(angleRad)
 Ge_dB = DspUtility.pow2db(Ge)
@@ -164,7 +164,7 @@ Ge_dB = clamp.(Ge_dB, y_lower_limit, Inf)
 f = Figure()
 ax = PolarAxis(f[1, 1], 
     title = "Yagi Uda",
-    thetalimits = (-0, pi),
+    thetalimits = (-π/2, π/2),
     radius_at_origin = -30,
     theta_0 = -pi/2,
     direction = -1,
