@@ -8,8 +8,8 @@ Optionally provide α. α=1.4 accounts for mutual coupling between elements.
 
 - R. A. Dana, Electronically Scanned Arrays and K-Space Gain Formulation, Springer, 2019.
 """
-function cos_taper(θ::Real, α = 1.4)
-    if (θ>pi/2)
+function cos_taper(θ::Real, ϕ::AbstractFloat=0.0, α=1.4)
+    if (θ > pi / 2)
         return 0
     end
     cos(θ)^α
@@ -36,7 +36,7 @@ function half_wave_dipole(θ::AbstractFloat, ϕ::AbstractFloat=0.0)
     # Variables for empirical modeling.
     c1 = 0.7796
     c2 = 0.2192
-    return 1.64 * (c1*sin(θ) + c2*sin(θ)^3)
+    return 1.64 * (c1 * sin(θ) + c2 * sin(θ)^3)
 end
 
 """
@@ -82,17 +82,19 @@ The model is based on the following geometry:
 
 """
 function yagi_uda(θ::AbstractFloat, ϕ::AbstractFloat=0.0)
-    if abs(θ)>π/2
+    if abs(θ) > π / 2
         @warn "The model is only valid for θ ∈ [−π/2, π/2]. Current value: θ = $θ"
     end
 
+    θ = θ - pi / 2
+
     # Variables for empirical modeling.
-    c1=  0.7535
-    c2= -8.1865
-    c3=  21.9141
-    c4=  3.7784
-    c5= -6.5321
-    return c1 + c2*sin(θ)^2 + c3*sin(θ)^4 + c4*sin(θ)^6 + c5*sin(θ)^8
+    c1 = 0.7535
+    c2 = -8.1865
+    c3 = 21.9141
+    c4 = 3.7784
+    c5 = -6.5321
+    return c1 + c2 * sin(θ)^2 + c3 * sin(θ)^4 + c4 * sin(θ)^6 + c5 * sin(θ)^8
 end
 
 """
@@ -113,15 +115,15 @@ The model is only valid for θ ∈ [−π/2, π/2].
 
 """
 function microstrip_patch(θ::AbstractFloat, ϕ::AbstractFloat=0.0)
-    if abs(θ)>π/2
+    if abs(θ) > π / 2
         @warn "The model is only valid for θ ∈ [−π/2, π/2]. Current value: θ = $θ"
     end
 
     # Variables for empirical modeling.
-    c1=  0.9731
-    c2= -0.8119
-    c3=  5.7330
-    return c1 + c2*sin(θ)^4 + c3*cos(θ)^4
+    c1 = 0.9731
+    c2 = -0.8119
+    c3 = 5.7330
+    return c1 + c2 * sin(θ)^4 + c3 * cos(θ)^4
 end
 
 end
